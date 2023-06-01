@@ -677,29 +677,29 @@ public class Test extends ApplicationAdapter {
 		if(TimeUtils.nanoTime() - lastalmadaDropTime > 1000500000) spawnalmadaDrop();
 
 		
-		if(TimeUtils.nanoTime() - lastarmaniDropTime > 1000000000) spawnarmaniDroP();
+		if(TimeUtils.nanoTime() - lastarmaniDropTime > 1100000000) spawnarmaniDroP();
 		if(TimeUtils.nanoTime() - lastbeckamDropTime > 1000000000) spawnbeckamDrop();
-		if(TimeUtils.nanoTime() - lastcoloDropTime > 1000000000) spawncoloDrop();
-		if(TimeUtils.nanoTime() - lastcorreaDropTime > 1000000000) spawncorreaDrop();
-		if(TimeUtils.nanoTime() - lastcutiDropTime > 1000000000) spawncutiDrop();
-		if(TimeUtils.nanoTime() - lastdibuDropTime > 1000000000) spawncorreaDrop();
-		if(TimeUtils.nanoTime() - lastDybalaDropTime > 1000000000) spawndybalaDrop();		
-		if(TimeUtils.nanoTime() - lastenzoDropTime > 1000000000) spawnenzoDrop();
-		if(TimeUtils.nanoTime() - lastfideoDropTime > 1000000000) spawnfideoDrop();
-		if(TimeUtils.nanoTime() - lastfoythDropTime > 1000000000) spawnfoythDrop();
-		if(TimeUtils.nanoTime() - lastjulianDropTime > 1000000000) spawnjulianDrop();
-		if(TimeUtils.nanoTime() - lastlautaDropTime > 1000000000) spawnlautaDrop();
-		if(TimeUtils.nanoTime() - lastlichaDropTime > 1000000000) spawnlichaDrop();
-		if(TimeUtils.nanoTime() - lastmolinaDropTime > 1000000000) spawnmolinaDrop();
-		if(TimeUtils.nanoTime() - lastmontielDropTime > 1000000000) spawnmontielDrop();
-		if(TimeUtils.nanoTime() - lastotamendiDropTime > 1000000000) spawnotamendiDrop();
-		if(TimeUtils.nanoTime() - lastpalaciosDropTime > 1000000000) spawnpalaciosDrop();
-		if(TimeUtils.nanoTime() - lastparedesDropTime > 1000000000) spawnparedesDrop();
-		if(TimeUtils.nanoTime() - lastpaulDropTime > 1000000000) spawnpaulDrop();
-		if(TimeUtils.nanoTime() - lastpezzelaDropTime > 1000000000) spawnpezzelaDrop();
-		if(TimeUtils.nanoTime() - lastrodriguezDropTime > 1000000000) spawnrodriguezDrop();
-		if(TimeUtils.nanoTime() - lastrulliDropTime > 1000000000) spawnrulliDrops();
-		if(TimeUtils.nanoTime() - lasttagliaDropTime > 1000000000) spawntagliaDrop();
+		if(TimeUtils.nanoTime() - lastcoloDropTime > 1200000000) spawncoloDrop();
+		if(TimeUtils.nanoTime() - lastcorreaDropTime > 1300000000) spawncorreaDrop();
+		if(TimeUtils.nanoTime() - lastcutiDropTime > 1400000000) spawncutiDrop();
+		if(TimeUtils.nanoTime() - lastdibuDropTime > 1500000000) spawncorreaDrop();
+		if(TimeUtils.nanoTime() - lastDybalaDropTime > 1600000000) spawndybalaDrop();		
+		if(TimeUtils.nanoTime() - lastenzoDropTime > 1700000000) spawnenzoDrop();
+		if(TimeUtils.nanoTime() - lastfideoDropTime > 1800000000) spawnfideoDrop();
+		if(TimeUtils.nanoTime() - lastfoythDropTime > 1900000000) spawnfoythDrop();
+		if(TimeUtils.nanoTime() - lastjulianDropTime > 2000000000) spawnjulianDrop();
+		if(TimeUtils.nanoTime() - lastlautaDropTime > 2100000000) spawnlautaDrop();
+		if(TimeUtils.nanoTime() - lastlichaDropTime > 220000000) spawnlichaDrop();
+		if(TimeUtils.nanoTime() - lastmolinaDropTime > 900000000) spawnmolinaDrop();
+		if(TimeUtils.nanoTime() - lastmontielDropTime > 800000000) spawnmontielDrop();
+		if(TimeUtils.nanoTime() - lastotamendiDropTime > 700000000) spawnotamendiDrop();
+		if(TimeUtils.nanoTime() - lastpalaciosDropTime > 600000000) spawnpalaciosDrop();
+		if(TimeUtils.nanoTime() - lastparedesDropTime > 400000000) spawnparedesDrop();
+		if(TimeUtils.nanoTime() - lastpaulDropTime > 500000000) spawnpaulDrop();
+		if(TimeUtils.nanoTime() - lastpezzelaDropTime > 400000000) spawnpezzelaDrop();
+		if(TimeUtils.nanoTime() - lastrodriguezDropTime > 300000000) spawnrodriguezDrop();
+		if(TimeUtils.nanoTime() - lastrulliDropTime > 250000000) spawnrulliDrops();
+		if(TimeUtils.nanoTime() - lasttagliaDropTime > 850000000) spawntagliaDrop();
 
 		
 
