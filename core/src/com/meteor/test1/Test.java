@@ -1,5 +1,6 @@
 package com.meteor.test1;
-
+import javax.swing.*;
+import java.util.*;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -8,22 +9,26 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g3d.particles.influencers.ColorInfluencer.Random;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Null;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.TimeUtils;
 
 import java.util.Iterator;
 
 public class Test extends ApplicationAdapter {
-	private Texture messiImage;
 
+	private Array<Rectangle> arr = new Array<Rectangle>();
+	private Rectangle[] vect = new Rectangle[26];
+	int players = 0;
+
+	private Texture messiImage;
 	private Texture acuñaImage;
-	private Texture almadaImage;
-	
-	
+	private Texture almadaImage;	
 	private Texture armaniImage;
 	private Texture beckamImage;
 	private Texture coloImage;
@@ -60,12 +65,10 @@ public class Test extends ApplicationAdapter {
 	private SpriteBatch batch;
 	private OrthographicCamera camera;
 	private Rectangle bucket;
-	private Array<Rectangle> messiDrops;
 
+	private Array<Rectangle> messiDrops;
 	private Array<Rectangle> acuñaDrops;
 	private Array<Rectangle> almadaDrops;
-
-	
 	private Array<Rectangle> armaniDrops;
 	private Array<Rectangle> beckamDrops;
 	private Array<Rectangle> coloDrops;
@@ -91,13 +94,10 @@ public class Test extends ApplicationAdapter {
 	private Array<Rectangle> tagliaDrops;
 	
 
-
+	/*
 	private long lastMessiDropTime;
-
 	private long lastacuñaDropTime;
-	private long lastalmadaDropTime;
-	
-	
+	private long lastalmadaDropTime;	
 	private long lastarmaniDropTime;
 	private long lastbeckamDropTime;
 	private long lastcoloDropTime;
@@ -121,7 +121,7 @@ public class Test extends ApplicationAdapter {
 	private long lastrodriguezDropTime;
 	private long lastrulliDropTime;
 	private long lasttagliaDropTime;
-	
+	 */
 
 /*
 	private int score;
@@ -130,16 +130,15 @@ public class Test extends ApplicationAdapter {
 
 	@Override
 	public void create() {
+
+		
 		// load the images for the droplet and the bucket, 64x64 pixels each
 		//and the gameOverBall		
 		
 		bucketImage = new Texture(Gdx.files.internal("scaloni.png"));
-
 		messiImage = new Texture(Gdx.files.internal("messi2.png"));
-
 		acuñaImage= new Texture(Gdx.files.internal("acuña.png"));
-		almadaImage= new Texture(Gdx.files.internal("almada.png"));
-		
+		almadaImage= new Texture(Gdx.files.internal("almada.png"));		
 		armaniImage= new Texture(Gdx.files.internal("armani.png"));
 		beckamImage= new Texture(Gdx.files.internal("beckam.png"));
 		coloImage= new Texture(Gdx.files.internal("colo.png"));
@@ -176,7 +175,7 @@ public class Test extends ApplicationAdapter {
 
 		// create the camera and the SpriteBatch
 		camera = new OrthographicCamera();
-		camera.setToOrtho(false, 650, 960);
+		camera.setToOrtho(false, 650, 500);
 		batch = new SpriteBatch();
 
 		// create a Rectangle to logically represent the bucket
@@ -224,7 +223,7 @@ public class Test extends ApplicationAdapter {
 		rulliDrops= new Array<Rectangle>();
 		tagliaDrops= new Array<Rectangle>();		
 		
-
+/* 
 		spawnMessidrop();
 
 		spawnacuñaDrop();
@@ -253,7 +252,7 @@ public class Test extends ApplicationAdapter {
 		spawnrodriguezDrop();
 		spawnrulliDrops();
 		spawntagliaDrop();
-		
+		*/
 
 		//score = 0;
 
@@ -267,265 +266,237 @@ public class Test extends ApplicationAdapter {
 		messiDrop.y = 960;
 		messiDrop.width = 64;
 		messiDrop.height = 64;
-		messiDrops.add(messiDrop);
-		
-		lastMessiDropTime = TimeUtils.nanoTime();
+		messiDrops.add(messiDrop);		
+		//lastMessiDropTime = TimeUtils.nanoTime();
 	}
-
-
 	private void spawnacuñaDrop(){
 		Rectangle acuñaDrop = new Rectangle();
 		acuñaDrop.x = MathUtils.random(0, 650-64);
 		acuñaDrop.y = 960;
 		acuñaDrop.width = 64;
 		acuñaDrop.height = 64;
-		acuñaDrops.add(acuñaDrop);
-		
-		lastacuñaDropTime = TimeUtils.nanoTime();
+		acuñaDrops.add(acuñaDrop);		
+		//lastacuñaDropTime = TimeUtils.nanoTime();	
 	}
 	private void spawnalmadaDrop(){
-			Rectangle alamadaDrop = new Rectangle();
-			alamadaDrop.x = MathUtils.random(0, 650-64);
-			alamadaDrop.y = 960;
-			alamadaDrop.width = 64;
-			alamadaDrop.height = 64;
-			almadaDrops.add(alamadaDrop);
-			
-			lastalmadaDropTime = TimeUtils.nanoTime();
-		}
-
-		
+		Rectangle alamadaDrop = new Rectangle();
+		alamadaDrop.x = MathUtils.random(0, 650-64);
+		alamadaDrop.y = 960;
+		alamadaDrop.width = 64;
+		alamadaDrop.height = 64;
+		almadaDrops.add(alamadaDrop);		
+		//lastalmadaDropTime = TimeUtils.nanoTime();
+    }
 
 	private void spawnarmaniDroP(){
-			Rectangle armaniDrop = new Rectangle();
-			armaniDrop.x = MathUtils.random(0, 650-64);
-			armaniDrop.y = 960;
-			armaniDrop.width = 64;
-			armaniDrop.height = 64;
-			armaniDrops.add(armaniDrop);
-			
-			lastarmaniDropTime = TimeUtils.nanoTime();
-		}
+		Rectangle armaniDrop = new Rectangle();
+		armaniDrop.x = MathUtils.random(0, 650-64);
+		armaniDrop.y = 960;
+		armaniDrop.width = 64;
+		armaniDrop.height = 64;
+		armaniDrops.add(armaniDrop);		
+		//lastarmaniDropTime = TimeUtils.nanoTime();
+	}
+
+	private void spawncoloDrop(){
+		Rectangle acuñaDrop = new Rectangle();
+		acuñaDrop.x = MathUtils.random(0, 650-64);
+		acuñaDrop.y = 960;
+		acuñaDrop.width = 64;
+		acuñaDrop.height = 64;
+		acuñaDrops.add(acuñaDrop);		
+		//lastacuñaDropTime = TimeUtils.nanoTime();
+	}	
 	private void spawnbeckamDrop(){
-			Rectangle beckamDrop = new Rectangle();
-			beckamDrop.x = MathUtils.random(0, 650-64);
-			beckamDrop.y = 960;
-			beckamDrop.width = 64;
-			beckamDrop.height = 64;
-			beckamDrops.add(beckamDrop);
-			
-			lastbeckamDropTime = TimeUtils.nanoTime();
-		}
-		private void spawncoloDrop(){
-			Rectangle acuñaDrop = new Rectangle();
-			acuñaDrop.x = MathUtils.random(0, 650-64);
-			acuñaDrop.y = 960;
-			acuñaDrop.width = 64;
-			acuñaDrop.height = 64;
-			acuñaDrops.add(acuñaDrop);
-			
-			lastacuñaDropTime = TimeUtils.nanoTime();
-		}
-		private void spawncorreaDrop(){
-			Rectangle correaDrop = new Rectangle();
-			correaDrop.x = MathUtils.random(0, 650-64);
-			correaDrop.y = 960;
-			correaDrop.width = 64;
-			correaDrop.height = 64;
-			correaDrops.add(correaDrop);
-			
-			lastcorreaDropTime = TimeUtils.nanoTime();
-		}
-		private void spawncutiDrop(){
-			Rectangle cutiDrop = new Rectangle();
-			cutiDrop.x = MathUtils.random(0, 650-64);
-			cutiDrop.y = 960;
-			cutiDrop.width = 64;
-			cutiDrop.height = 64;
-			cutiDrops.add(cutiDrop);
-			
-			lastcutiDropTime = TimeUtils.nanoTime();
-		}
-		private void spawndibuDrop(){
-			Rectangle dibuDrop = new Rectangle();
-			dibuDrop.x = MathUtils.random(0, 650-64);
-			dibuDrop.y = 960;
-			dibuDrop.width = 64;
-			dibuDrop.height = 64;
-			dibuDrops.add(dibuDrop);
-			
-			lastdibuDropTime = TimeUtils.nanoTime();
-		}
-		private void spawndybalaDrop(){
-			Rectangle dybalaDrop = new Rectangle();
-			dybalaDrop.x = MathUtils.random(0, 650-64);
-			dybalaDrop.y = 960;
-			dybalaDrop.width = 64;
-			dybalaDrop.height = 64;
-			dybalaDrops.add(dybalaDrop);
-			
-			lastDybalaDropTime = TimeUtils.nanoTime();
-		}
-		private void spawnenzoDrop(){
-			Rectangle enzoDrop = new Rectangle();
-			enzoDrop.x = MathUtils.random(0, 650-64);
-			enzoDrop.y = 960;
-			enzoDrop.width = 64;
-			enzoDrop.height = 64;
-			enzoDrops.add(enzoDrop);
-			
-			lastenzoDropTime = TimeUtils.nanoTime();
-		}
-		private void spawnfideoDrop(){
-			Rectangle fideoDrop = new Rectangle();
-			fideoDrop.x = MathUtils.random(0, 650-64);
-			fideoDrop.y = 960;
-			fideoDrop.width = 64;
-			fideoDrop.height = 64;
-			fideoDrops.add(fideoDrop);
-			
-			lastfideoDropTime = TimeUtils.nanoTime();
-		}
-		private void spawnfoythDrop(){
-			Rectangle foythDrop = new Rectangle();
-			foythDrop.x = MathUtils.random(0, 650-64);
-			foythDrop.y = 960;
-			foythDrop.width = 64;
-			foythDrop.height = 64;
-			foythDrops.add(foythDrop);
-			
-			lastfoythDropTime = TimeUtils.nanoTime();
-		}
-		private void spawnjulianDrop(){
-			Rectangle julianDrop = new Rectangle();
-			julianDrop.x = MathUtils.random(0, 650-64);
-			julianDrop.y = 960;
-			julianDrop.width = 64;
-			julianDrop.height = 64;
-			julianDrops.add(julianDrop);
-			
-			lastjulianDropTime = TimeUtils.nanoTime();
-		}
-		private void spawnlautaDrop(){
-			Rectangle lautaDrop = new Rectangle();
-			lautaDrop.x = MathUtils.random(0, 650-64);
-			lautaDrop.y = 960;
-			lautaDrop.width = 64;
-			lautaDrop.height = 64;
-			lautaDrops.add(lautaDrop);
-			
-			lastacuñaDropTime = TimeUtils.nanoTime();
-		}
-		private void spawnlichaDrop(){
-			Rectangle lichaDrop = new Rectangle();
-			lichaDrop.x = MathUtils.random(0, 650-64);
-			lichaDrop.y = 960;
-			lichaDrop.width = 64;
-			lichaDrop.height = 64;
-			lichaDrops.add(lichaDrop);
-			
-			lastlichaDropTime = TimeUtils.nanoTime();
-		}
-		private void spawnmolinaDrop(){
-			Rectangle molinaDrop = new Rectangle();
-			molinaDrop.x = MathUtils.random(0, 650-64);
-			molinaDrop.y = 960;
-			molinaDrop.width = 64;
-			molinaDrop.height = 64;
-			molinaDrops.add(molinaDrop);
-			
-			lastmolinaDropTime = TimeUtils.nanoTime();
-		}
-		private void spawnmontielDrop(){
-			Rectangle montielDrop = new Rectangle();
-			montielDrop.x = MathUtils.random(0, 650-64);
-			montielDrop.y = 960;
-			montielDrop.width = 64;
-			montielDrop.height = 64;
-			montielDrops.add(montielDrop);
-			
-			lastmontielDropTime = TimeUtils.nanoTime();
-		}
-		private void spawnotamendiDrop(){
-			Rectangle otamendiDrop = new Rectangle();
-			otamendiDrop.x = MathUtils.random(0, 650-64);
-			otamendiDrop.y = 960;
-			otamendiDrop.width = 64;
-			otamendiDrop.height = 64;
-			otamendiDrops.add(otamendiDrop);
-			
-			lastotamendiDropTime = TimeUtils.nanoTime();
-		}
-		private void spawnpalaciosDrop(){
-			Rectangle palaciosDrop = new Rectangle();
-			palaciosDrop.x = MathUtils.random(0, 650-64);
-			palaciosDrop.y = 960;
-			palaciosDrop.width = 64;
-			palaciosDrop.height = 64;
-			palaciosDrops.add(palaciosDrop);
-			
-			lastpalaciosDropTime = TimeUtils.nanoTime();
-		}
-		private void spawnparedesDrop(){
-			Rectangle paredesDrop = new Rectangle();
-			paredesDrop.x = MathUtils.random(0, 650-64);
-			paredesDrop.y = 960;
-			paredesDrop.width = 64;
-			paredesDrop.height = 64;
-			paredesDrops.add(paredesDrop);
-			
-			lastparedesDropTime = TimeUtils.nanoTime();
-		}
-		private void spawnpaulDrop(){
-			Rectangle paulDrop = new Rectangle();
-			paulDrop.x = MathUtils.random(0, 650-64);
-			paulDrop.y = 960;
-			paulDrop.width = 64;
-			paulDrop.height = 64;
-			paulDrops.add(paulDrop);
-			
-			lastpaulDropTime = TimeUtils.nanoTime();
-		}
-		private void spawnpezzelaDrop(){
-			Rectangle pezzelaDrop = new Rectangle();
-			pezzelaDrop.x = MathUtils.random(0, 650-64);
-			pezzelaDrop.y = 960;
-			pezzelaDrop.width = 64;
-			pezzelaDrop.height = 64;
-			pezzelaDrops.add(pezzelaDrop);
-			
-			lastpezzelaDropTime = TimeUtils.nanoTime();
-		}
-		private void spawnrodriguezDrop(){
-			Rectangle rodriguezDrop = new Rectangle();
-			rodriguezDrop.x = MathUtils.random(0, 650-64);
-			rodriguezDrop.y = 960;
-			rodriguezDrop.width = 64;
-			rodriguezDrop.height = 64;
-			rodriguezDrops.add(rodriguezDrop);
-			
-			lastrodriguezDropTime = TimeUtils.nanoTime();
-		}
-		private void spawnrulliDrops(){
-			Rectangle rulliDrop = new Rectangle();
-			rulliDrop.x = MathUtils.random(0, 650-64);
-			rulliDrop.y = 960;
-			rulliDrop.width = 64;
-			rulliDrop.height = 64;
-			rulliDrops.add(rulliDrop);
-			
-			lastrulliDropTime = TimeUtils.nanoTime();
-		}
-		private void spawntagliaDrop(){
-			Rectangle tagliaDrop = new Rectangle();
-			tagliaDrop.x = MathUtils.random(0, 650-64);
-			tagliaDrop.y = 960;
-			tagliaDrop.width = 64;
-			tagliaDrop.height = 64;
-			tagliaDrops.add(tagliaDrop);
-			
-			lasttagliaDropTime = TimeUtils.nanoTime();
-		}
+		Rectangle beckamDrop = new Rectangle();
+		beckamDrop.x = MathUtils.random(0, 650-64);
+		beckamDrop.y = 960;
+		beckamDrop.width = 64;
+		beckamDrop.height = 64;
+		beckamDrops.add(beckamDrop);		
+		//lastbeckamDropTime = TimeUtils.nanoTime();
+	}
+	private void spawncorreaDrop(){
+		Rectangle correaDrop = new Rectangle();
+		correaDrop.x = MathUtils.random(0, 650-64);
+		correaDrop.y = 960;
+		correaDrop.width = 64;
+		correaDrop.height = 64;
+		correaDrops.add(correaDrop);		
+		//lastcorreaDropTime = TimeUtils.nanoTime();
+	}
+	private void spawncutiDrop(){
+		Rectangle cutiDrop = new Rectangle();
+		cutiDrop.x = MathUtils.random(0, 650-64);
+		cutiDrop.y = 960;
+		cutiDrop.width = 64;
+		cutiDrop.height = 64;
+		cutiDrops.add(cutiDrop);		
+		//lastcutiDropTime = TimeUtils.nanoTime();
+	}
+	private void spawndibuDrop(){
+		Rectangle dibuDrop = new Rectangle();
+		dibuDrop.x = MathUtils.random(0, 650-64);
+		dibuDrop.y = 960;
+		dibuDrop.width = 64;
+		dibuDrop.height = 64;
+		dibuDrops.add(dibuDrop);		
+		//lastdibuDropTime = TimeUtils.nanoTime();
+	}
+	private void spawndybalaDrop(){
+		Rectangle dybalaDrop = new Rectangle();
+		dybalaDrop.x = MathUtils.random(0, 650-64);
+		dybalaDrop.y = 960;
+		dybalaDrop.width = 64;
+		dybalaDrop.height = 64;
+		dybalaDrops.add(dybalaDrop);		
+		//lastDybalaDropTime = TimeUtils.nanoTime();
+	}
+	private void spawnenzoDrop(){
+		Rectangle enzoDrop = new Rectangle();
+		enzoDrop.x = MathUtils.random(0, 650-64);
+		enzoDrop.y = 960;
+		enzoDrop.width = 64;
+		enzoDrop.height = 64;
+		enzoDrops.add(enzoDrop);		
+		//lastenzoDropTime = TimeUtils.nanoTime();
+	}
+	private void spawnfideoDrop(){
+		Rectangle fideoDrop = new Rectangle();
+		fideoDrop.x = MathUtils.random(0, 650-64);
+		fideoDrop.y = 960;
+		fideoDrop.width = 64;
+		fideoDrop.height = 64;
+		fideoDrops.add(fideoDrop);		
+		//lastfideoDropTime = TimeUtils.nanoTime();
+	}
+	private void spawnfoythDrop(){
+		Rectangle foythDrop = new Rectangle();
+		foythDrop.x = MathUtils.random(0, 650-64);
+		foythDrop.y = 960;
+		foythDrop.width = 64;
+		foythDrop.height = 64;
+		foythDrops.add(foythDrop);		
+		//lastfoythDropTime = TimeUtils.nanoTime();
+	}
+	private void spawnjulianDrop(){
+		Rectangle julianDrop = new Rectangle();
+		julianDrop.x = MathUtils.random(0, 650-64);
+		julianDrop.y = 960;
+		julianDrop.width = 64;
+		julianDrop.height = 64;
+		julianDrops.add(julianDrop);		
+		//lastjulianDropTime = TimeUtils.nanoTime();
+	}
+	private void spawnlautaDrop(){
+		Rectangle lautaDrop = new Rectangle();
+		lautaDrop.x = MathUtils.random(0, 650-64);
+		lautaDrop.y = 960;
+		lautaDrop.width = 64;
+		lautaDrop.height = 64;
+		lautaDrops.add(lautaDrop);		
+		//lastacuñaDropTime = TimeUtils.nanoTime();
+	}
+	private void spawnlichaDrop(){
+		Rectangle lichaDrop = new Rectangle();
+		lichaDrop.x = MathUtils.random(0, 650-64);
+		lichaDrop.y = 960;
+		lichaDrop.width = 64;
+		lichaDrop.height = 64;
+		lichaDrops.add(lichaDrop);		
+		//lastlichaDropTime = TimeUtils.nanoTime();
+	}
+	private void spawnmolinaDrop(){
+		Rectangle molinaDrop = new Rectangle();
+		molinaDrop.x = MathUtils.random(0, 650-64);
+		molinaDrop.y = 960;
+		molinaDrop.width = 64;
+		molinaDrop.height = 64;
+		molinaDrops.add(molinaDrop);		
+		//lastmolinaDropTime = TimeUtils.nanoTime();
+	}
+	private void spawnmontielDrop(){
+		Rectangle montielDrop = new Rectangle();
+		montielDrop.x = MathUtils.random(0, 650-64);
+		montielDrop.y = 960;
+		montielDrop.width = 64;
+		montielDrop.height = 64;
+		montielDrops.add(montielDrop);		
+		//lastmontielDropTime = TimeUtils.nanoTime();
+	}
+	private void spawnotamendiDrop(){
+		Rectangle otamendiDrop = new Rectangle();
+		otamendiDrop.x = MathUtils.random(0, 650-64);
+		otamendiDrop.y = 960;
+		otamendiDrop.width = 64;
+		otamendiDrop.height = 64;
+		otamendiDrops.add(otamendiDrop);		
+		//lastotamendiDropTime = TimeUtils.nanoTime();
+	}
+	private void spawnpalaciosDrop(){
+		Rectangle palaciosDrop = new Rectangle();
+		palaciosDrop.x = MathUtils.random(0, 650-64);
+		palaciosDrop.y = 960;
+		palaciosDrop.width = 64;
+		palaciosDrop.height = 64;
+		palaciosDrops.add(palaciosDrop);		
+		//lastpalaciosDropTime = TimeUtils.nanoTime();
+	}
+	private void spawnparedesDrop(){
+		Rectangle paredesDrop = new Rectangle();
+		paredesDrop.x = MathUtils.random(0, 650-64);
+		paredesDrop.y = 960;
+		paredesDrop.width = 64;
+		paredesDrop.height = 64;
+		paredesDrops.add(paredesDrop);		
+		//lastparedesDropTime = TimeUtils.nanoTime();
+	}
+	private void spawnpaulDrop(){
+		Rectangle paulDrop = new Rectangle();
+		paulDrop.x = MathUtils.random(0, 650-64);
+		paulDrop.y = 960;
+		paulDrop.width = 64;
+		paulDrop.height = 64;
+		paulDrops.add(paulDrop);		
+		//lastpaulDropTime = TimeUtils.nanoTime();
+	}
+	private void spawnpezzelaDrop(){
+		Rectangle pezzelaDrop = new Rectangle();
+		pezzelaDrop.x = MathUtils.random(0, 650-64);
+		pezzelaDrop.y = 960;
+		pezzelaDrop.width = 64;
+		pezzelaDrop.height = 64;
+		pezzelaDrops.add(pezzelaDrop);		
+		//lastpezzelaDropTime = TimeUtils.nanoTime();
+	}
+	private void spawnrodriguezDrop(){
+		Rectangle rodriguezDrop = new Rectangle();
+		rodriguezDrop.x = MathUtils.random(0, 650-64);
+		rodriguezDrop.y = 960;
+		rodriguezDrop.width = 64;
+		rodriguezDrop.height = 64;
+		rodriguezDrops.add(rodriguezDrop);		
+		//lastrodriguezDropTime = TimeUtils.nanoTime();
+	}
+	private void spawnrulliDrops(){
+		Rectangle rulliDrop = new Rectangle();
+		rulliDrop.x = MathUtils.random(0, 650-64);
+		rulliDrop.y = 960;
+		rulliDrop.width = 64;
+		rulliDrop.height = 64;
+		rulliDrops.add(rulliDrop);		
+		//lastrulliDropTime = TimeUtils.nanoTime();
+	}
+	private void spawntagliaDrop(){
+		Rectangle tagliaDrop = new Rectangle();
+		tagliaDrop.x = MathUtils.random(0, 650-64);
+		tagliaDrop.y = 960;
+		tagliaDrop.width = 64;
+		tagliaDrop.height = 64;
+		tagliaDrops.add(tagliaDrop);		
+		//lasttagliaDropTime = TimeUtils.nanoTime();
+	}
+	
 	 
 		
 	
@@ -670,40 +641,115 @@ public class Test extends ApplicationAdapter {
 		if(bucket.y > 800 - 64) bucket.y = 960 - 64;
 
 		// check if we need to create a new raindrop, acidRaindrop or goldenRaindrop
-		
+		/* 
 		if(TimeUtils.nanoTime() - lastMessiDropTime > 1000010000) spawnMessidrop();
+		if(TimeUtils.nanoTime() - lastacuñaDropTime > 1500020000) spawnacuñaDrop();
+		if(TimeUtils.nanoTime() - lastalmadaDropTime > 1200500000) spawnalmadaDrop();		
+		if(TimeUtils.nanoTime() - lastarmaniDropTime > 1900000000) spawnarmaniDroP();
+		if(TimeUtils.nanoTime() - lastbeckamDropTime > 200000000) spawnbeckamDrop();
+		if(TimeUtils.nanoTime() - lastcoloDropTime > 300000000) spawncoloDrop();
+		if(TimeUtils.nanoTime() - lastcorreaDropTime > 400000000) spawncorreaDrop();
+		if(TimeUtils.nanoTime() - lastcutiDropTime > 500000000) spawncutiDrop();
+		if(TimeUtils.nanoTime() - lastdibuDropTime > 800000000) spawndibuDrop();
+		if(TimeUtils.nanoTime() - lastDybalaDropTime > 1000000000) spawndybalaDrop();
+		if(TimeUtils.nanoTime() - lastenzoDropTime > 1000000000) spawnenzoDrop();
+		if(TimeUtils.nanoTime() - lastfideoDropTime > 1000000000) spawnfideoDrop();
+		if(TimeUtils.nanoTime() - lastfoythDropTime > 1000000000) spawnfoythDrop();
+		if(TimeUtils.nanoTime() - lastjulianDropTime > 1000000000) spawnjulianDrop();
+		if(TimeUtils.nanoTime() - lastlautaDropTime > 1000000000) spawnlautaDrop();
+		if(TimeUtils.nanoTime() - lastlichaDropTime > 1000000000) spawnlichaDrop();
+		if(TimeUtils.nanoTime() - lastmolinaDropTime > 1000000000) spawnmolinaDrop();
+		if(TimeUtils.nanoTime() - lastmontielDropTime > 1000000000) spawnmontielDrop();
+		if(TimeUtils.nanoTime() - lastotamendiDropTime > 1000000000) spawnotamendiDrop();
+		if(TimeUtils.nanoTime() - lastpalaciosDropTime > 1000000000) spawnpalaciosDrop();
+		if(TimeUtils.nanoTime() - lastparedesDropTime > 1000000000) spawnparedesDrop();
+		if(TimeUtils.nanoTime() - lastpaulDropTime > 1000000000) spawnpaulDrop();
+		if(TimeUtils.nanoTime() - lastpezzelaDropTime > 1000000000)	spawnpezzelaDrop();
+		if(TimeUtils.nanoTime() - lastrodriguezDropTime > 1000000000) spawnrodriguezDrop();
+		if(TimeUtils.nanoTime() - lastrulliDropTime > 1000000000) spawnrulliDrops();
+		if(TimeUtils.nanoTime() - lasttagliaDropTime > 1000000000) spawntagliaDrop();
+		*/
 
-		if(TimeUtils.nanoTime() - lastacuñaDropTime > 1000020000) spawnacuñaDrop();
-		if(TimeUtils.nanoTime() - lastalmadaDropTime > 1000500000) spawnalmadaDrop();
-
-		
-		if(TimeUtils.nanoTime() - lastarmaniDropTime > 1100000000) spawnarmaniDroP();
-		if(TimeUtils.nanoTime() - lastbeckamDropTime > 1000000000) spawnbeckamDrop();
-		if(TimeUtils.nanoTime() - lastcoloDropTime > 1200000000) spawncoloDrop();
-		if(TimeUtils.nanoTime() - lastcorreaDropTime > 1300000000) spawncorreaDrop();
-		if(TimeUtils.nanoTime() - lastcutiDropTime > 1400000000) spawncutiDrop();
-		if(TimeUtils.nanoTime() - lastdibuDropTime > 1500000000) spawncorreaDrop();
-		if(TimeUtils.nanoTime() - lastDybalaDropTime > 1600000000) spawndybalaDrop();		
-		if(TimeUtils.nanoTime() - lastenzoDropTime > 1700000000) spawnenzoDrop();
-		if(TimeUtils.nanoTime() - lastfideoDropTime > 1800000000) spawnfideoDrop();
-		if(TimeUtils.nanoTime() - lastfoythDropTime > 1900000000) spawnfoythDrop();
-		if(TimeUtils.nanoTime() - lastjulianDropTime > 2000000000) spawnjulianDrop();
-		if(TimeUtils.nanoTime() - lastlautaDropTime > 2100000000) spawnlautaDrop();
-		if(TimeUtils.nanoTime() - lastlichaDropTime > 220000000) spawnlichaDrop();
-		if(TimeUtils.nanoTime() - lastmolinaDropTime > 900000000) spawnmolinaDrop();
-		if(TimeUtils.nanoTime() - lastmontielDropTime > 800000000) spawnmontielDrop();
-		if(TimeUtils.nanoTime() - lastotamendiDropTime > 700000000) spawnotamendiDrop();
-		if(TimeUtils.nanoTime() - lastpalaciosDropTime > 600000000) spawnpalaciosDrop();
-		if(TimeUtils.nanoTime() - lastparedesDropTime > 400000000) spawnparedesDrop();
-		if(TimeUtils.nanoTime() - lastpaulDropTime > 500000000) spawnpaulDrop();
-		if(TimeUtils.nanoTime() - lastpezzelaDropTime > 400000000) spawnpezzelaDrop();
-		if(TimeUtils.nanoTime() - lastrodriguezDropTime > 300000000) spawnrodriguezDrop();
-		if(TimeUtils.nanoTime() - lastrulliDropTime > 250000000) spawnrulliDrops();
-		if(TimeUtils.nanoTime() - lasttagliaDropTime > 850000000) spawntagliaDrop();
-
-		
-
-
+		int i = MathUtils.random(0, 500);
+		if(i == 0){
+			spawnMessidrop();
+		}
+		else if(i == 1){
+			spawnacuñaDrop();
+		}
+		else if(i == 2){
+			spawnbeckamDrop();
+		}
+		else if(i == 3){
+			spawncoloDrop();
+		}
+		else if(i == 4){
+			spawncorreaDrop();
+		}
+		else if(i == 5){
+			spawncutiDrop();
+		}
+		else if(i == 6){
+			spawndybalaDrop();
+		}
+		else if(i == 7){
+			spawnenzoDrop();
+		}
+		else if(i == 8){
+			spawnfideoDrop();
+		}
+		else if(i == 9){			
+			spawnfoythDrop();
+		}
+		else if(i == 10){
+			spawnjulianDrop();
+		}
+		else if(i == 11){
+			spawnlautaDrop();	
+		}
+		else if(i == 12){
+			spawnlichaDrop();
+		}
+		else if(i == 13){
+			spawnmolinaDrop();
+		}
+		else if(i == 14){
+			spawnmontielDrop();	 
+		}
+		else if(i == 15){
+			spawnotamendiDrop();	
+		}
+		else if(i == 16){
+			spawnpalaciosDrop();
+			
+		}
+		else if(i == 17){
+			spawnparedesDrop();				
+		}
+		else if(i == 18){
+			spawnpaulDrop();			
+		}
+		else if(i == 19){
+			spawnpezzelaDrop();			
+		}
+		else if(i == 20){
+			spawnrodriguezDrop();			   
+		}
+		else if(i == 21){
+			spawnrulliDrops();		   
+		}
+		else if(i == 22){
+			spawntagliaDrop();
+		}
+		else if(i == 23){
+			spawnarmaniDroP();
+		}
+		else if(i == 24){
+			spawnalmadaDrop();
+		}
+		else if(i == 25){
+			spawndibuDrop();
+		}
 
 		// move the raindrops, remove any that are beneath the bottom edge of
 		// the screen or that hit the bucket. In the latter case we play back
@@ -730,6 +776,7 @@ public class Test extends ApplicationAdapter {
 			if(messiDrop.y + 64 < 0) iter.remove();
 			if(messiDrop.overlaps(bucket)) {
 				dropSound.play();
+				vect[0]=messiDrop;
 				//score += 1;
 				iter.remove();
 			}
@@ -741,6 +788,7 @@ public class Test extends ApplicationAdapter {
 			if(acuñaDrop.y + 64 < 0) iter.remove();
 			if(acuñaDrop.overlaps(bucket)) {
 				dropSound.play();
+				vect[1]=acuñaDrop;
 				//score += 1;
 				iter.remove();
 			}
@@ -751,6 +799,7 @@ public class Test extends ApplicationAdapter {
 			if(almadaDrop.y + 64 < 0) iter.remove();
 			if(almadaDrop.overlaps(bucket)) {
 				dropSound.play();
+				vect[2]=almadaDrop;
 				//score += 1;
 				iter.remove();
 			}
@@ -763,6 +812,7 @@ public class Test extends ApplicationAdapter {
 			if(armaniDrop.y + 64 < 0) iter.remove();
 			if(armaniDrop.overlaps(bucket)) {
 				dropSound.play();
+				vect[3]=armaniDrop;
 				//score += 1;
 				iter.remove();
 			}
@@ -773,6 +823,7 @@ public class Test extends ApplicationAdapter {
 			if(beckamDrop.y + 64 < 0) iter.remove();
 			if(beckamDrop.overlaps(bucket)) {
 				dropSound.play();
+				vect[4]=beckamDrop;
 				//score += 1;
 				iter.remove();
 			}
@@ -783,6 +834,7 @@ public class Test extends ApplicationAdapter {
 			if(coloDrop.y + 64 < 0) iter.remove();
 			if(coloDrop.overlaps(bucket)) {
 				dropSound.play();
+				vect[5]=coloDrop;
 				//score += 1;
 				iter.remove();
 			}
@@ -793,6 +845,7 @@ public class Test extends ApplicationAdapter {
 			if(correaDrop.y + 64 < 0) iter.remove();
 			if(correaDrop.overlaps(bucket)) {
 				dropSound.play();
+				vect[6]=correaDrop;
 				//score += 1;
 				iter.remove();
 			}
@@ -803,6 +856,7 @@ public class Test extends ApplicationAdapter {
 			if(cutiDrop.y + 64 < 0) iter.remove();
 			if(cutiDrop.overlaps(bucket)) {
 				dropSound.play();
+				vect[7]=cutiDrop;
 				//score += 1;
 				iter.remove();
 			}
@@ -813,6 +867,7 @@ public class Test extends ApplicationAdapter {
 			if(dibuDrop.y + 64 < 0) iter.remove();
 			if(dibuDrop.overlaps(bucket)) {
 				dropSound.play();
+				vect[8]=dibuDrop;
 				//score += 1;
 				iter.remove();
 			}
@@ -823,6 +878,7 @@ public class Test extends ApplicationAdapter {
 			if(dybalaDrop.y + 64 < 0) iter.remove();
 			if(dybalaDrop.overlaps(bucket)) {
 				dropSound.play();
+				vect[9]=dybalaDrop;
 				//score += 1;
 				iter.remove();
 			}
@@ -833,6 +889,7 @@ public class Test extends ApplicationAdapter {
 			if(enzoDrop.y + 64 < 0) iter.remove();
 			if(enzoDrop.overlaps(bucket)) {
 				dropSound.play();
+				vect[10]= enzoDrop;
 				//score += 1;
 				iter.remove();
 			}
@@ -843,6 +900,7 @@ public class Test extends ApplicationAdapter {
 			if(fideoDrop.y + 64 < 0) iter.remove();
 			if(fideoDrop.overlaps(bucket)) {
 				dropSound.play();
+				vect[11]= fideoDrop;
 				//score += 1;
 				iter.remove();
 			}
@@ -853,6 +911,7 @@ public class Test extends ApplicationAdapter {
 			if(foythDrop.y + 64 < 0) iter.remove();
 			if(foythDrop.overlaps(bucket)) {
 				dropSound.play();
+				vect[12]=foythDrop;
 				//score += 1;
 				iter.remove();
 			}
@@ -863,6 +922,7 @@ public class Test extends ApplicationAdapter {
 			if(julianDrop.y + 64 < 0) iter.remove();
 			if(julianDrop.overlaps(bucket)) {
 				dropSound.play();
+				vect[13]=julianDrop;
 				//score += 1;
 				iter.remove();
 			}
@@ -873,6 +933,7 @@ public class Test extends ApplicationAdapter {
 			if(lautaDrop.y + 64 < 0) iter.remove();
 			if(lautaDrop.overlaps(bucket)) {
 				dropSound.play();
+				vect[14]=lautaDrop;
 				//score += 1;
 				iter.remove();
 			}
@@ -883,6 +944,7 @@ public class Test extends ApplicationAdapter {
 			if(lichaDrop.y + 64 < 0) iter.remove();
 			if(lichaDrop.overlaps(bucket)) {
 				dropSound.play();
+				vect[15]=lichaDrop;
 				//score += 1;
 				iter.remove();
 			}
@@ -893,6 +955,7 @@ public class Test extends ApplicationAdapter {
 			if(molinaDrop.y + 64 < 0) iter.remove();
 			if(molinaDrop.overlaps(bucket)) {
 				dropSound.play();
+				vect[16]=molinaDrop;
 				//score += 1;
 				iter.remove();
 			}
@@ -903,6 +966,7 @@ public class Test extends ApplicationAdapter {
 			if(montielDrop.y + 64 < 0) iter.remove();
 			if(montielDrop.overlaps(bucket)) {
 				dropSound.play();
+				vect[17]=montielDrop;
 				//score += 1;
 				iter.remove();
 			}
@@ -913,6 +977,7 @@ public class Test extends ApplicationAdapter {
 			if(otamendiDrop.y + 64 < 0) iter.remove();
 			if(otamendiDrop.overlaps(bucket)) {
 				dropSound.play();
+				PlayerTaken(otamendiDrop);
 				//score += 1;
 				iter.remove();
 			}
@@ -923,6 +988,7 @@ public class Test extends ApplicationAdapter {
 			if(paredesDrop.y + 64 < 0) iter.remove();
 			if(paredesDrop.overlaps(bucket)) {
 				dropSound.play();
+				PlayerTaken(paredesDrop);
 				//score += 1;
 				iter.remove();
 			}
@@ -934,6 +1000,7 @@ public class Test extends ApplicationAdapter {
 			if(paulDrop.overlaps(bucket)) {
 				dropSound.play();
 				//score += 1;
+				PlayerTaken(paulDrop);
 				iter.remove();
 			}
 		}
@@ -943,6 +1010,7 @@ public class Test extends ApplicationAdapter {
 			if(pezzelaDrop.y + 64 < 0) iter.remove();
 			if(pezzelaDrop.overlaps(bucket)) {
 				dropSound.play();
+				PlayerTaken(pezzelaDrop);
 				//score += 1;
 				iter.remove();
 			}
@@ -953,6 +1021,7 @@ public class Test extends ApplicationAdapter {
 			if(rodriguezDrop.y + 64 < 0) iter.remove();
 			if(rodriguezDrop.overlaps(bucket)) {
 				dropSound.play();
+				PlayerTaken(rodriguezDrop);
 				//score += 1;
 				iter.remove();
 			}
@@ -963,6 +1032,7 @@ public class Test extends ApplicationAdapter {
 			if(rulliDrop.y + 64 < 0) iter.remove();
 			if(rulliDrop.overlaps(bucket)) {
 				dropSound.play();
+				PlayerTaken(rulliDrop);
 				//score += 1;
 				iter.remove();
 			}
@@ -974,6 +1044,7 @@ public class Test extends ApplicationAdapter {
 			if(tagliaDrop.overlaps(bucket)) {
 				dropSound.play();
 				//score += 1;
+				PlayerTaken(tagliaDrop);
 				iter.remove();
 			}
 		}
@@ -982,6 +1053,53 @@ public class Test extends ApplicationAdapter {
 		
 		//checkScore();
 	}
+
+	public void PlayerTaken(Rectangle Player){		
+		/* 
+			
+		if(!lista.contains(Player)){
+			lista.add(Player);
+		}	
+
+		
+		for(int i = 0; i < vect.length; i++){			
+			if( vect[i] == Player){
+				break;
+			}
+			else if(i == vect.length){
+				for(int x=0; x < vect.length; x++){
+					if( vect[x] == null){
+
+						players ++;
+						vect[x] = Player;
+						
+					}
+				}
+			}
+			i++;
+		}
+		*/
+
+
+		//esto no funca
+		if(!arr.contains(Player, false)){
+			arr.add(Player);	
+			players++;		
+		}
+
+		
+
+		if(arr.size == 26){
+			//SCALONETTA!!!
+			JFrame jFrame = new JFrame();
+			JOptionPane.showMessageDialog(jFrame, "Completaste la Scaloneta! ahora a ganar utro mundial pibe");
+		}
+
+
+
+		
+	}
+
 
 	@Override
 	public void dispose() {
@@ -995,8 +1113,6 @@ public class Test extends ApplicationAdapter {
 		messiImage.dispose();
 		acuñaImage.dispose();
 		almadaImage.dispose();
-
-		
 		armaniImage.dispose();
 		beckamImage.dispose();
 		coloImage.dispose();
@@ -1009,8 +1125,7 @@ public class Test extends ApplicationAdapter {
 		foythImage.dispose();
 		julianImage.dispose();
 		lautaImage.dispose();
-		lichaImage.dispose();
-		
+		lichaImage.dispose();		
 		molinaImage.dispose();
 		montielImage.dispose();
 		otamendiImage.dispose();
