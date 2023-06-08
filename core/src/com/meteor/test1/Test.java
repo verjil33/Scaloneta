@@ -4,6 +4,7 @@ import java.util.*;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.assets.loaders.ModelLoader;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -53,6 +54,36 @@ public class Test extends ApplicationAdapter {
 	private Texture rulliImage;
 	private Texture scaloniImage;
 	private Texture tagliaImage;
+
+	private int scaloneta;
+
+	private boolean messiTaken = false;
+	private boolean acuñaTaken = false;
+	private boolean almadaTaken = false;
+	private boolean armaniTaken = false;
+	private boolean beckamTaken = false;
+	private boolean coloTaken = false;
+	private boolean correaTaken = false;
+	private boolean cutiTaken = false;
+	private boolean dibuTaken = false;
+	private boolean dybalaTaken = false;
+	private boolean enzoTaken = false;
+	private boolean fideoTaken = false;
+	private boolean foythTaken = false;
+	private boolean julianTaken = false;
+	private boolean lautaTaken = false;
+	private boolean lichaTaken = false;
+	private boolean molinaTaken = false;	
+	private boolean montielTaken = false;
+	private boolean otamendiTaken = false;
+	private boolean palaciosTaken = false;
+	private boolean paredesTaken = false;
+	private boolean paulTaken = false;
+	private boolean pezzelaTaken = false;
+	private boolean rodriguezTaken = false;
+	private boolean rulliTaken = false;
+	private boolean tagliaTaken = false;
+
 	
 
 
@@ -299,12 +330,12 @@ public class Test extends ApplicationAdapter {
 	}
 
 	private void spawncoloDrop(){
-		Rectangle acuñaDrop = new Rectangle();
-		acuñaDrop.x = MathUtils.random(0, 650-64);
-		acuñaDrop.y = 960;
-		acuñaDrop.width = 64;
-		acuñaDrop.height = 64;
-		acuñaDrops.add(acuñaDrop);		
+		Rectangle coloDrop = new Rectangle();
+		coloDrop.x = MathUtils.random(0, 650-64);
+		coloDrop.y = 960;
+		coloDrop.width = 64;
+		coloDrop.height = 64;
+		coloDrops.add(coloDrop);		
 		//lastacuñaDropTime = TimeUtils.nanoTime();
 	}	
 	private void spawnbeckamDrop(){
@@ -545,8 +576,7 @@ public class Test extends ApplicationAdapter {
 		}
 		for(Rectangle almadaDrop: almadaDrops) {
 			batch.draw(almadaImage, almadaDrop.x, almadaDrop.y);
-		}
-		
+		}		
 		for(Rectangle armaniDrop: armaniDrops) {
 			batch.draw(armaniImage, armaniDrop.x, armaniDrop.y);
 		}
@@ -720,8 +750,7 @@ public class Test extends ApplicationAdapter {
 			spawnotamendiDrop();	
 		}
 		else if(i == 16){
-			spawnpalaciosDrop();
-			
+			spawnpalaciosDrop();			
 		}
 		else if(i == 17){
 			spawnparedesDrop();				
@@ -776,7 +805,11 @@ public class Test extends ApplicationAdapter {
 			if(messiDrop.y + 64 < 0) iter.remove();
 			if(messiDrop.overlaps(bucket)) {
 				dropSound.play();
-				vect[0]=messiDrop;
+				if(!messiTaken){
+					messiTaken = true;
+					scaloneta++;
+				}
+				//vect[0]=messiDrop;
 				//score += 1;
 				iter.remove();
 			}
@@ -788,7 +821,11 @@ public class Test extends ApplicationAdapter {
 			if(acuñaDrop.y + 64 < 0) iter.remove();
 			if(acuñaDrop.overlaps(bucket)) {
 				dropSound.play();
-				vect[1]=acuñaDrop;
+				if(!acuñaTaken){
+					acuñaTaken = true;
+					scaloneta++;
+				}
+				//vect[1]=acuñaDrop;
 				//score += 1;
 				iter.remove();
 			}
@@ -799,7 +836,11 @@ public class Test extends ApplicationAdapter {
 			if(almadaDrop.y + 64 < 0) iter.remove();
 			if(almadaDrop.overlaps(bucket)) {
 				dropSound.play();
-				vect[2]=almadaDrop;
+				if(!almadaTaken){
+					almadaTaken = true;
+					scaloneta++;
+				}
+				//vect[2]=almadaDrop;
 				//score += 1;
 				iter.remove();
 			}
@@ -812,7 +853,11 @@ public class Test extends ApplicationAdapter {
 			if(armaniDrop.y + 64 < 0) iter.remove();
 			if(armaniDrop.overlaps(bucket)) {
 				dropSound.play();
-				vect[3]=armaniDrop;
+				if(!armaniTaken){
+					armaniTaken = true;
+					scaloneta++;
+				}
+				//vect[3]=armaniDrop;
 				//score += 1;
 				iter.remove();
 			}
@@ -823,7 +868,11 @@ public class Test extends ApplicationAdapter {
 			if(beckamDrop.y + 64 < 0) iter.remove();
 			if(beckamDrop.overlaps(bucket)) {
 				dropSound.play();
-				vect[4]=beckamDrop;
+				if(!beckamTaken){
+					beckamTaken = true;
+					scaloneta++;
+				}
+				//vect[4]=beckamDrop;
 				//score += 1;
 				iter.remove();
 			}
@@ -834,7 +883,11 @@ public class Test extends ApplicationAdapter {
 			if(coloDrop.y + 64 < 0) iter.remove();
 			if(coloDrop.overlaps(bucket)) {
 				dropSound.play();
-				vect[5]=coloDrop;
+				if(!coloTaken){
+					coloTaken = true;
+					scaloneta++;
+				}
+				//vect[5]=coloDrop;
 				//score += 1;
 				iter.remove();
 			}
@@ -845,7 +898,11 @@ public class Test extends ApplicationAdapter {
 			if(correaDrop.y + 64 < 0) iter.remove();
 			if(correaDrop.overlaps(bucket)) {
 				dropSound.play();
-				vect[6]=correaDrop;
+				if(!correaTaken){
+					correaTaken = true;
+					scaloneta++;
+				}
+				//vect[6]=correaDrop;
 				//score += 1;
 				iter.remove();
 			}
@@ -856,7 +913,11 @@ public class Test extends ApplicationAdapter {
 			if(cutiDrop.y + 64 < 0) iter.remove();
 			if(cutiDrop.overlaps(bucket)) {
 				dropSound.play();
-				vect[7]=cutiDrop;
+				if(!cutiTaken){
+					cutiTaken = true;
+					scaloneta++;
+				}
+				//vect[7]=cutiDrop;
 				//score += 1;
 				iter.remove();
 			}
@@ -867,7 +928,11 @@ public class Test extends ApplicationAdapter {
 			if(dibuDrop.y + 64 < 0) iter.remove();
 			if(dibuDrop.overlaps(bucket)) {
 				dropSound.play();
-				vect[8]=dibuDrop;
+				if(!dibuTaken){
+					dibuTaken = true;
+					scaloneta++;
+				}
+				//vect[8]=dibuDrop;
 				//score += 1;
 				iter.remove();
 			}
@@ -878,7 +943,11 @@ public class Test extends ApplicationAdapter {
 			if(dybalaDrop.y + 64 < 0) iter.remove();
 			if(dybalaDrop.overlaps(bucket)) {
 				dropSound.play();
-				vect[9]=dybalaDrop;
+				if(!dybalaTaken){
+					dybalaTaken = true;
+					scaloneta++;
+				}
+				//vect[9]=dybalaDrop;
 				//score += 1;
 				iter.remove();
 			}
@@ -889,7 +958,11 @@ public class Test extends ApplicationAdapter {
 			if(enzoDrop.y + 64 < 0) iter.remove();
 			if(enzoDrop.overlaps(bucket)) {
 				dropSound.play();
-				vect[10]= enzoDrop;
+				if(!enzoTaken){
+					enzoTaken = true;
+					scaloneta++;
+				}
+				//vect[10]= enzoDrop;
 				//score += 1;
 				iter.remove();
 			}
@@ -900,7 +973,11 @@ public class Test extends ApplicationAdapter {
 			if(fideoDrop.y + 64 < 0) iter.remove();
 			if(fideoDrop.overlaps(bucket)) {
 				dropSound.play();
-				vect[11]= fideoDrop;
+				if(!fideoTaken){
+					fideoTaken = true;
+					scaloneta++;
+				}
+				//vect[11]= fideoDrop;
 				//score += 1;
 				iter.remove();
 			}
@@ -911,7 +988,11 @@ public class Test extends ApplicationAdapter {
 			if(foythDrop.y + 64 < 0) iter.remove();
 			if(foythDrop.overlaps(bucket)) {
 				dropSound.play();
-				vect[12]=foythDrop;
+				if(!foythTaken){
+					foythTaken = true;
+					scaloneta++;
+				}
+				//vect[12]=foythDrop;
 				//score += 1;
 				iter.remove();
 			}
@@ -922,7 +1003,11 @@ public class Test extends ApplicationAdapter {
 			if(julianDrop.y + 64 < 0) iter.remove();
 			if(julianDrop.overlaps(bucket)) {
 				dropSound.play();
-				vect[13]=julianDrop;
+				if(!julianTaken){
+					julianTaken = true;
+					scaloneta++;
+				}
+				//vect[13]=julianDrop;
 				//score += 1;
 				iter.remove();
 			}
@@ -933,7 +1018,11 @@ public class Test extends ApplicationAdapter {
 			if(lautaDrop.y + 64 < 0) iter.remove();
 			if(lautaDrop.overlaps(bucket)) {
 				dropSound.play();
-				vect[14]=lautaDrop;
+				if(!lautaTaken){
+					lautaTaken = true;
+					scaloneta++;
+				}
+				//vect[14]=lautaDrop;
 				//score += 1;
 				iter.remove();
 			}
@@ -944,7 +1033,11 @@ public class Test extends ApplicationAdapter {
 			if(lichaDrop.y + 64 < 0) iter.remove();
 			if(lichaDrop.overlaps(bucket)) {
 				dropSound.play();
-				vect[15]=lichaDrop;
+				if(!lichaTaken){
+					lichaTaken = true;
+					scaloneta++;
+				}
+				//vect[15]=lichaDrop;
 				//score += 1;
 				iter.remove();
 			}
@@ -955,7 +1048,11 @@ public class Test extends ApplicationAdapter {
 			if(molinaDrop.y + 64 < 0) iter.remove();
 			if(molinaDrop.overlaps(bucket)) {
 				dropSound.play();
-				vect[16]=molinaDrop;
+				if(!molinaTaken){
+					molinaTaken = true;
+					scaloneta++;
+				}
+				//vect[16]=molinaDrop;
 				//score += 1;
 				iter.remove();
 			}
@@ -966,7 +1063,11 @@ public class Test extends ApplicationAdapter {
 			if(montielDrop.y + 64 < 0) iter.remove();
 			if(montielDrop.overlaps(bucket)) {
 				dropSound.play();
-				vect[17]=montielDrop;
+				if(!montielTaken){
+					montielTaken = true;
+					scaloneta++;
+				}
+				//vect[17]=montielDrop;
 				//score += 1;
 				iter.remove();
 			}
@@ -977,7 +1078,11 @@ public class Test extends ApplicationAdapter {
 			if(otamendiDrop.y + 64 < 0) iter.remove();
 			if(otamendiDrop.overlaps(bucket)) {
 				dropSound.play();
-				PlayerTaken(otamendiDrop);
+				if(!otamendiTaken){
+					otamendiTaken = true;
+					scaloneta++;
+				}
+				//vect[18]=otamendiDrop;
 				//score += 1;
 				iter.remove();
 			}
@@ -988,7 +1093,11 @@ public class Test extends ApplicationAdapter {
 			if(paredesDrop.y + 64 < 0) iter.remove();
 			if(paredesDrop.overlaps(bucket)) {
 				dropSound.play();
-				PlayerTaken(paredesDrop);
+				if(!paredesTaken){
+					paredesTaken = true;
+					scaloneta++;
+				}
+				//vect[19]=paredesDrop;
 				//score += 1;
 				iter.remove();
 			}
@@ -999,8 +1108,12 @@ public class Test extends ApplicationAdapter {
 			if(paulDrop.y + 64 < 0) iter.remove();
 			if(paulDrop.overlaps(bucket)) {
 				dropSound.play();
+				if(!paulTaken){
+					paulTaken = true;
+					scaloneta++;
+				}
 				//score += 1;
-				PlayerTaken(paulDrop);
+				//vect[20]=paulDrop;
 				iter.remove();
 			}
 		}
@@ -1010,7 +1123,11 @@ public class Test extends ApplicationAdapter {
 			if(pezzelaDrop.y + 64 < 0) iter.remove();
 			if(pezzelaDrop.overlaps(bucket)) {
 				dropSound.play();
-				PlayerTaken(pezzelaDrop);
+				if(!pezzelaTaken){
+					pezzelaTaken = true;
+					scaloneta++;
+				}
+				//vect[21]=pezzelaDrop;
 				//score += 1;
 				iter.remove();
 			}
@@ -1021,7 +1138,11 @@ public class Test extends ApplicationAdapter {
 			if(rodriguezDrop.y + 64 < 0) iter.remove();
 			if(rodriguezDrop.overlaps(bucket)) {
 				dropSound.play();
-				PlayerTaken(rodriguezDrop);
+				if(!rodriguezTaken){
+					rodriguezTaken = true;
+					scaloneta++;
+				}
+				//vect[22]=rodriguezDrop;
 				//score += 1;
 				iter.remove();
 			}
@@ -1032,7 +1153,11 @@ public class Test extends ApplicationAdapter {
 			if(rulliDrop.y + 64 < 0) iter.remove();
 			if(rulliDrop.overlaps(bucket)) {
 				dropSound.play();
-				PlayerTaken(rulliDrop);
+				if(!rulliTaken){
+					rulliTaken = true;
+					scaloneta++;
+				}
+				//vect[23]=rulliDrop;
 				//score += 1;
 				iter.remove();
 			}
@@ -1043,18 +1168,56 @@ public class Test extends ApplicationAdapter {
 			if(tagliaDrop.y + 64 < 0) iter.remove();
 			if(tagliaDrop.overlaps(bucket)) {
 				dropSound.play();
+				if(!tagliaTaken){
+					tagliaTaken = true;
+					scaloneta++;
+				}
 				//score += 1;
-				PlayerTaken(tagliaDrop);
+				//vect[24]=tagliaDrop;
+				iter.remove();
+			}
+		}		
+		for (Iterator<Rectangle> iter = palaciosDrops.iterator(); iter.hasNext(); ) {
+			Rectangle palaciosDrop = iter.next();
+			palaciosDrop.y -= 250 * Gdx.graphics.getDeltaTime();
+			if(palaciosDrop.y + 64 < 0) iter.remove();
+			if(palaciosDrop.overlaps(bucket)) {
+				dropSound.play();
+				if(!palaciosTaken){
+					palaciosTaken = true;
+					scaloneta++;
+				}
+				//vect[25]=palaciosDrop;
+				//score += 1;
 				iter.remove();
 			}
 		}
-
+		if(scaloneta >= 26){
+			JFrame jFrame = new JFrame();
+			JOptionPane.showMessageDialog(jFrame, "Completaste la Scaloneta! ahora a ganar utro mundial pibe");
+			
+		}
 		
 		
 		//checkScore();
-	}
+		
 
+	}
+	public void CheckResult(){
+		int y = 0;
+		for(int x = 0; x < vect.length; x++){
+			if(vect[x] == null){
+				//no se completo
+				break;
+			}
+			y++;
+		}
+		
+		y = 0;
+
+	}
 	public void PlayerTaken(Rectangle Player){		
+		
 		/* 
 			
 		if(!lista.contains(Player)){
@@ -1079,20 +1242,18 @@ public class Test extends ApplicationAdapter {
 			i++;
 		}
 		*/
-
+/*
 
 		//esto no funca
-		if(!arr.contains(Player, false)){
+		if(!arr.contains(Player, true)){
 			arr.add(Player);	
 			players++;		
-		}
-
+		}*/
 		
 
 		if(arr.size == 26){
 			//SCALONETTA!!!
-			JFrame jFrame = new JFrame();
-			JOptionPane.showMessageDialog(jFrame, "Completaste la Scaloneta! ahora a ganar utro mundial pibe");
+			
 		}
 
 
