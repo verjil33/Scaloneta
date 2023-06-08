@@ -23,9 +23,9 @@ import java.util.Iterator;
 
 public class Test extends ApplicationAdapter {
 
-	private Array<Rectangle> arr = new Array<Rectangle>();
-	private Rectangle[] vect = new Rectangle[26];
+	private Array<Rectangle> arr = new Array<Rectangle>();	
 	int players = 0;
+	//#region scaloneta image
 
 	private Texture messiImage;
 	private Texture acuñaImage;
@@ -55,7 +55,10 @@ public class Test extends ApplicationAdapter {
 	private Texture scaloniImage;
 	private Texture tagliaImage;
 
+	//#endregion
+
 	private int scaloneta;
+//#region boolean
 
 	private boolean messiTaken = false;
 	private boolean acuñaTaken = false;
@@ -85,7 +88,7 @@ public class Test extends ApplicationAdapter {
 	private boolean tagliaTaken = false;
 
 	
-
+//#endregion
 
 
 
@@ -97,6 +100,7 @@ public class Test extends ApplicationAdapter {
 	private OrthographicCamera camera;
 	private Rectangle bucket;
 
+	//#region array
 	private Array<Rectangle> messiDrops;
 	private Array<Rectangle> acuñaDrops;
 	private Array<Rectangle> almadaDrops;
@@ -124,6 +128,7 @@ public class Test extends ApplicationAdapter {
 	private Array<Rectangle> rulliDrops;	
 	private Array<Rectangle> tagliaDrops;
 	
+	//#endregion
 
 	/*
 	private long lastMessiDropTime;
@@ -164,8 +169,10 @@ public class Test extends ApplicationAdapter {
 
 		
 		// load the images for the droplet and the bucket, 64x64 pixels each
-		//and the gameOverBall		
-		
+		//and the gameOverBall	
+
+		//#region textures
+
 		bucketImage = new Texture(Gdx.files.internal("scaloni.png"));
 		messiImage = new Texture(Gdx.files.internal("messi2.png"));
 		acuñaImage= new Texture(Gdx.files.internal("acuña.png"));
@@ -194,7 +201,7 @@ public class Test extends ApplicationAdapter {
 		rulliImage= new Texture(Gdx.files.internal("rulli.png"));
 		tagliaImage= new Texture(Gdx.files.internal("taglia.png"));
 		
-
+//#endregion
 
 		// load the drop sound effect and the rain background "music"
 		dropSound = Gdx.audio.newSound(Gdx.files.internal("drop.wav"));
@@ -225,11 +232,11 @@ public class Test extends ApplicationAdapter {
 		
 
 		// create the goldenRaindrops array and spawn the first ball
-		messiDrops= new Array<Rectangle>();
+		//#region arraydefin
 
+		messiDrops= new Array<Rectangle>();
 		acuñaDrops= new Array<Rectangle>();
-		almadaDrops= new Array<Rectangle>();
-		
+		almadaDrops= new Array<Rectangle>();		
 		armaniDrops= new Array<Rectangle>();
 		beckamDrops= new Array<Rectangle>();
 		coloDrops= new Array<Rectangle>();
@@ -252,7 +259,8 @@ public class Test extends ApplicationAdapter {
 		pezzelaDrops= new Array<Rectangle>();
 		rodriguezDrops= new Array<Rectangle>();
 		rulliDrops= new Array<Rectangle>();
-		tagliaDrops= new Array<Rectangle>();		
+		tagliaDrops= new Array<Rectangle>();	
+		//#endregion	
 		
 /* 
 		spawnMessidrop();
@@ -290,7 +298,8 @@ public class Test extends ApplicationAdapter {
 		//scoreToShrink = 10;
 	}
 
-	
+	//#region spawns
+
 	private void spawnMessidrop() {
 		Rectangle messiDrop = new Rectangle();
 		messiDrop.x = MathUtils.random(0, 650-64);
@@ -529,24 +538,9 @@ public class Test extends ApplicationAdapter {
 	}
 	
 	 
-		
+		//#endregion
 	
-/* 
-	private void checkScore() {
-		//the bucket becomes smaller if player catches 10 raindrops
-		if (score >= scoreToShrink) {
-			bucket.width -= 4;
-			bucket.height -= 4;
-			//bucketImage.draw();
-			//code to make the image smaller
 
-			if (scoreToShrink <= 100) {
-				scoreToShrink += 10;
-			}
-		}
-	}
-
-	*/
 	@Override
 	public void render() {
 		// clear the screen with a dark blue color. The
@@ -567,7 +561,8 @@ public class Test extends ApplicationAdapter {
 		batch.begin();
 		batch.draw(bucketImage, bucket.x, bucket.y);
 		
-		
+		//#region fors
+
 		for(Rectangle messiDrop: messiDrops) {
 			batch.draw(messiImage, messiDrop.x, messiDrop.y);
 		}
@@ -647,7 +642,7 @@ public class Test extends ApplicationAdapter {
 			batch.draw(tagliaImage, tagliaDrop.x, tagliaDrop.y);
 		}
 
-		
+		//#endregion
 
 		
 		
@@ -699,6 +694,8 @@ public class Test extends ApplicationAdapter {
 		if(TimeUtils.nanoTime() - lastrulliDropTime > 1000000000) spawnrulliDrops();
 		if(TimeUtils.nanoTime() - lasttagliaDropTime > 1000000000) spawntagliaDrop();
 		*/
+
+		//#region random
 
 		int i = MathUtils.random(0, 500);
 		if(i == 0){
@@ -780,6 +777,8 @@ public class Test extends ApplicationAdapter {
 			spawndibuDrop();
 		}
 
+		//#endregion
+
 		// move the raindrops, remove any that are beneath the bottom edge of
 		// the screen or that hit the bucket. In the latter case we play back
 		// a sound effect as well.
@@ -799,6 +798,9 @@ public class Test extends ApplicationAdapter {
 		// move the gameOverBalls, remove any that are beneath the bottom edge of
 		// the screen. If any hits the bucket, the game ends.	
 		
+
+		//#region spawner
+
 		for (Iterator<Rectangle> iter = messiDrops.iterator(); iter.hasNext(); ) {
 			Rectangle messiDrop = iter.next();
 			messiDrop.y -= 250 * Gdx.graphics.getDeltaTime();
@@ -808,6 +810,7 @@ public class Test extends ApplicationAdapter {
 				if(!messiTaken){
 					messiTaken = true;
 					scaloneta++;
+					arr.add(messiDrop);
 				}
 				//vect[0]=messiDrop;
 				//score += 1;
@@ -824,6 +827,7 @@ public class Test extends ApplicationAdapter {
 				if(!acuñaTaken){
 					acuñaTaken = true;
 					scaloneta++;
+					arr.add(acuñaDrop);
 				}
 				//vect[1]=acuñaDrop;
 				//score += 1;
@@ -839,6 +843,7 @@ public class Test extends ApplicationAdapter {
 				if(!almadaTaken){
 					almadaTaken = true;
 					scaloneta++;
+					arr.add(almadaDrop);
 				}
 				//vect[2]=almadaDrop;
 				//score += 1;
@@ -856,6 +861,7 @@ public class Test extends ApplicationAdapter {
 				if(!armaniTaken){
 					armaniTaken = true;
 					scaloneta++;
+					arr.add(armaniDrop);
 				}
 				//vect[3]=armaniDrop;
 				//score += 1;
@@ -871,6 +877,7 @@ public class Test extends ApplicationAdapter {
 				if(!beckamTaken){
 					beckamTaken = true;
 					scaloneta++;
+					arr.add(beckamDrop);
 				}
 				//vect[4]=beckamDrop;
 				//score += 1;
@@ -886,6 +893,7 @@ public class Test extends ApplicationAdapter {
 				if(!coloTaken){
 					coloTaken = true;
 					scaloneta++;
+					arr.add(coloDrop);
 				}
 				//vect[5]=coloDrop;
 				//score += 1;
@@ -901,6 +909,7 @@ public class Test extends ApplicationAdapter {
 				if(!correaTaken){
 					correaTaken = true;
 					scaloneta++;
+					arr.add(correaDrop);
 				}
 				//vect[6]=correaDrop;
 				//score += 1;
@@ -916,6 +925,7 @@ public class Test extends ApplicationAdapter {
 				if(!cutiTaken){
 					cutiTaken = true;
 					scaloneta++;
+					arr.add(cutiDrop);
 				}
 				//vect[7]=cutiDrop;
 				//score += 1;
@@ -931,6 +941,7 @@ public class Test extends ApplicationAdapter {
 				if(!dibuTaken){
 					dibuTaken = true;
 					scaloneta++;
+					arr.add(dibuDrop);
 				}
 				//vect[8]=dibuDrop;
 				//score += 1;
@@ -946,6 +957,7 @@ public class Test extends ApplicationAdapter {
 				if(!dybalaTaken){
 					dybalaTaken = true;
 					scaloneta++;
+					arr.add(dybalaDrop);
 				}
 				//vect[9]=dybalaDrop;
 				//score += 1;
@@ -961,6 +973,7 @@ public class Test extends ApplicationAdapter {
 				if(!enzoTaken){
 					enzoTaken = true;
 					scaloneta++;
+					arr.add(enzoDrop);
 				}
 				//vect[10]= enzoDrop;
 				//score += 1;
@@ -976,6 +989,7 @@ public class Test extends ApplicationAdapter {
 				if(!fideoTaken){
 					fideoTaken = true;
 					scaloneta++;
+					arr.add(fideoDrop);
 				}
 				//vect[11]= fideoDrop;
 				//score += 1;
@@ -991,6 +1005,7 @@ public class Test extends ApplicationAdapter {
 				if(!foythTaken){
 					foythTaken = true;
 					scaloneta++;
+					arr.add(foythDrop);
 				}
 				//vect[12]=foythDrop;
 				//score += 1;
@@ -1006,6 +1021,7 @@ public class Test extends ApplicationAdapter {
 				if(!julianTaken){
 					julianTaken = true;
 					scaloneta++;
+					arr.add(julianDrop);
 				}
 				//vect[13]=julianDrop;
 				//score += 1;
@@ -1021,6 +1037,7 @@ public class Test extends ApplicationAdapter {
 				if(!lautaTaken){
 					lautaTaken = true;
 					scaloneta++;
+					arr.add(lautaDrop);
 				}
 				//vect[14]=lautaDrop;
 				//score += 1;
@@ -1036,6 +1053,7 @@ public class Test extends ApplicationAdapter {
 				if(!lichaTaken){
 					lichaTaken = true;
 					scaloneta++;
+					arr.add(lichaDrop);
 				}
 				//vect[15]=lichaDrop;
 				//score += 1;
@@ -1051,6 +1069,7 @@ public class Test extends ApplicationAdapter {
 				if(!molinaTaken){
 					molinaTaken = true;
 					scaloneta++;
+					arr.add(molinaDrop);
 				}
 				//vect[16]=molinaDrop;
 				//score += 1;
@@ -1066,6 +1085,7 @@ public class Test extends ApplicationAdapter {
 				if(!montielTaken){
 					montielTaken = true;
 					scaloneta++;
+					arr.add(montielDrop);
 				}
 				//vect[17]=montielDrop;
 				//score += 1;
@@ -1081,6 +1101,7 @@ public class Test extends ApplicationAdapter {
 				if(!otamendiTaken){
 					otamendiTaken = true;
 					scaloneta++;
+					arr.add(otamendiDrop);
 				}
 				//vect[18]=otamendiDrop;
 				//score += 1;
@@ -1096,6 +1117,7 @@ public class Test extends ApplicationAdapter {
 				if(!paredesTaken){
 					paredesTaken = true;
 					scaloneta++;
+					arr.add(paredesDrop);
 				}
 				//vect[19]=paredesDrop;
 				//score += 1;
@@ -1111,6 +1133,7 @@ public class Test extends ApplicationAdapter {
 				if(!paulTaken){
 					paulTaken = true;
 					scaloneta++;
+					arr.add(paulDrop);
 				}
 				//score += 1;
 				//vect[20]=paulDrop;
@@ -1126,6 +1149,7 @@ public class Test extends ApplicationAdapter {
 				if(!pezzelaTaken){
 					pezzelaTaken = true;
 					scaloneta++;
+					arr.add(pezzelaDrop);
 				}
 				//vect[21]=pezzelaDrop;
 				//score += 1;
@@ -1141,6 +1165,7 @@ public class Test extends ApplicationAdapter {
 				if(!rodriguezTaken){
 					rodriguezTaken = true;
 					scaloneta++;
+					arr.add(rodriguezDrop);
 				}
 				//vect[22]=rodriguezDrop;
 				//score += 1;
@@ -1156,6 +1181,7 @@ public class Test extends ApplicationAdapter {
 				if(!rulliTaken){
 					rulliTaken = true;
 					scaloneta++;
+					arr.add(rulliDrop);
 				}
 				//vect[23]=rulliDrop;
 				//score += 1;
@@ -1171,6 +1197,7 @@ public class Test extends ApplicationAdapter {
 				if(!tagliaTaken){
 					tagliaTaken = true;
 					scaloneta++;
+					arr.add(tagliaDrop);
 				}
 				//score += 1;
 				//vect[24]=tagliaDrop;
@@ -1186,16 +1213,20 @@ public class Test extends ApplicationAdapter {
 				if(!palaciosTaken){
 					palaciosTaken = true;
 					scaloneta++;
+					arr.add(palaciosDrop);
 				}
 				//vect[25]=palaciosDrop;
 				//score += 1;
 				iter.remove();
 			}
 		}
+
+//#endregion
+
 		if(scaloneta >= 26){
 			JFrame jFrame = new JFrame();
 			JOptionPane.showMessageDialog(jFrame, "Completaste la Scaloneta! ahora a ganar utro mundial pibe");
-			
+
 		}
 		
 		
@@ -1203,70 +1234,13 @@ public class Test extends ApplicationAdapter {
 		
 
 	}
-	public void CheckResult(){
-		int y = 0;
-		for(int x = 0; x < vect.length; x++){
-			if(vect[x] == null){
-				//no se completo
-				break;
-			}
-			y++;
-		}
-		
-		y = 0;
-
-	}
-	public void PlayerTaken(Rectangle Player){		
-		
-		/* 
-			
-		if(!lista.contains(Player)){
-			lista.add(Player);
-		}	
-
-		
-		for(int i = 0; i < vect.length; i++){			
-			if( vect[i] == Player){
-				break;
-			}
-			else if(i == vect.length){
-				for(int x=0; x < vect.length; x++){
-					if( vect[x] == null){
-
-						players ++;
-						vect[x] = Player;
-						
-					}
-				}
-			}
-			i++;
-		}
-		*/
-/*
-
-		//esto no funca
-		if(!arr.contains(Player, true)){
-			arr.add(Player);	
-			players++;		
-		}*/
-		
-
-		if(arr.size == 26){
-			//SCALONETTA!!!
-			
-		}
-
-
-
-		
-	}
 
 
 	@Override
 	public void dispose() {
 		// dispose of all the native resources
 
-		
+		//#region dispose
 		bucketImage.dispose();
 		dropSound.dispose();
 		rainMusic.dispose();
@@ -1298,7 +1272,7 @@ public class Test extends ApplicationAdapter {
 		rulliImage.dispose();
 		scaloniImage.dispose();
 		tagliaImage.dispose();
-		
+		//#endregion
 
 
 	}
