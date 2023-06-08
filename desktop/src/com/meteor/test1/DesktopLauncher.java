@@ -2,7 +2,7 @@ package com.meteor.test1;
 
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
-import com.meteor.test1.Test;
+//import com.meteor.test1.Test;
 
 
 public class DesktopLauncher {
