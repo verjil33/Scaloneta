@@ -24,7 +24,7 @@ import java.util.Iterator;
 public class Test extends ApplicationAdapter {
 
 	private Array<Rectangle> arr = new Array<Rectangle>();	
-	int players = 0;
+
 	//#region scaloneta image
 
 	private Texture messiImage;
@@ -57,7 +57,7 @@ public class Test extends ApplicationAdapter {
 
 	//#endregion
 
-	private int scaloneta;
+	
 	//#region boolean
 
 	private boolean messiTaken = false;
@@ -92,13 +92,15 @@ public class Test extends ApplicationAdapter {
 
 
 
-
+	private int scaloneta;
 	private Texture bucketImage;
 	private Sound dropSound;
 	private Music rainMusic;
 	private SpriteBatch batch;
 	private OrthographicCamera camera;
 	private Rectangle bucket;
+	//private string text;
+
 
 	//#region array
 	private Array<Rectangle> messiDrops;
@@ -130,13 +132,11 @@ public class Test extends ApplicationAdapter {
 	
 	//#endregion
 
-	
-
-	
 	@Override
 	public void create() {
 
 		
+
 		// load the images for the droplet and the bucket, 64x64 pixels each
 		//and the gameOverBall	
 
@@ -178,7 +178,9 @@ public class Test extends ApplicationAdapter {
 
 		// start the playback of the background music immediately
 		rainMusic.setLooping(true);
+		rainMusic.setVolume(0.25f);
 		rainMusic.play();
+	
 
 		// create the camera and the SpriteBatch
 		camera = new OrthographicCamera();
