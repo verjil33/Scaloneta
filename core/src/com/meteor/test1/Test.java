@@ -91,6 +91,9 @@ public class Test extends ApplicationAdapter {
 //#endregion
 
 
+	private Texture titularesImage;	
+	private Texture suplentesImage;
+
 
 	private int scaloneta;
 	private Texture bucketImage;
@@ -99,6 +102,9 @@ public class Test extends ApplicationAdapter {
 	private SpriteBatch batch;
 	private OrthographicCamera camera;
 	private Rectangle bucket;
+
+	private Rectangle titulares;
+	private Rectangle suplentes;
 	//private string text;
 
 
@@ -142,6 +148,9 @@ public class Test extends ApplicationAdapter {
 
 		//#region textures
 
+		titularesImage = new Texture(Gdx.files.internal("titulares.png"));
+		suplentesImage = new Texture(Gdx.files.internal("suplentes.png"));
+
 		bucketImage = new Texture(Gdx.files.internal("scaloni.png"));
 		messiImage = new Texture(Gdx.files.internal("messi2.png"));
 		acuñaImage= new Texture(Gdx.files.internal("acuña.png"));
@@ -184,10 +193,22 @@ public class Test extends ApplicationAdapter {
 
 		// create the camera and the SpriteBatch
 		camera = new OrthographicCamera();
-		camera.setToOrtho(false, 650, 500);
+		camera.setToOrtho(false, 1200, 800);
 		batch = new SpriteBatch();
 
-		// create a Rectangle to logically represent the bucket
+		titulares = new Rectangle();
+		titulares.x = 500;
+		titulares.y = 50; 
+		titulares.width = 64;
+		titulares.height = 64;
+
+		suplentes = new Rectangle();
+		suplentes.x = 800;
+		suplentes.y = 0; 
+		suplentes.width = 64;
+		suplentes.height = 64;
+
+		// create a Rectangle to logically represent the bucket		
 		bucket = new Rectangle();
 		bucket.x = 650 / 2 - 64 / 2; // center the bucket horizontally
 		bucket.y = 20; // bottom left corner of the bucket is 20 pixels above the bottom screen edge
@@ -505,6 +526,11 @@ public class Test extends ApplicationAdapter {
 		// all drops and balls
 		batch.begin();
 		batch.draw(bucketImage, bucket.x, bucket.y);
+
+		batch.draw(titularesImage, titulares.x, titulares.y);
+		batch.draw(suplentesImage, suplentes.x, suplentes.y);
+
+
 		
 		//#region fors
 
@@ -1152,6 +1178,9 @@ public class Test extends ApplicationAdapter {
 		// dispose of all the native resources
 
 		//#region dispose
+		titularesImage.dispose();
+		suplentesImage.dispose();
+
 		bucketImage.dispose();
 		dropSound.dispose();
 		rainMusic.dispose();
