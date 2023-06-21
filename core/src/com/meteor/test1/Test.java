@@ -1,12 +1,15 @@
 package com.meteor.test1;
 import javax.swing.*;
+
+//import org.w3c.dom.Text;
+
 //import java.util.*;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 //import com.badlogic.gdx.assets.loaders.ModelLoader;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.audio.Sound;
+//import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -23,7 +26,11 @@ import java.util.Iterator;
 
 public class Test extends ApplicationAdapter {
 
-	private Array<Rectangle> arr = new Array<Rectangle>();	
+	int vidas = 10;
+
+	//private Array<Rectangle> arr = new Array<Rectangle>();	
+	
+
 
 	//#region scaloneta image
 
@@ -57,6 +64,18 @@ public class Test extends ApplicationAdapter {
 
 	//#endregion
 
+	//#region otrosJugadores
+	private Texture tortugaImage;
+	private Texture lukaImage;
+	private Texture neuerImage;
+	private Texture boboImage;
+	private Texture griezmanImage;
+	private Texture kaneImage;
+	private Texture ronaldoImage;
+	private Texture viniImage;
+
+
+	//#endregion
 	
 	//#region boolean
 
@@ -92,12 +111,12 @@ public class Test extends ApplicationAdapter {
 
 
 	private Texture titularesImage;	
-	private Texture suplentesImage;
+	//private Texture suplentesImage;
 
 
 	private int scaloneta;
 	private Texture bucketImage;
-	private Sound dropSound;
+	private Music dropSound;
 	private Music rainMusic;
 	private SpriteBatch batch;
 	private OrthographicCamera camera;
@@ -136,8 +155,20 @@ public class Test extends ApplicationAdapter {
 	private Array<Rectangle> rulliDrops;	
 	private Array<Rectangle> tagliaDrops;
 	
+	private Array<Rectangle> tortugaDrops;
+	private Array<Rectangle> lukaDrops;
+	private Array<Rectangle> neuerDrops;
+	private Array<Rectangle> kaneDrops;	
+	private Array<Rectangle> boboDrops;
+	private Array<Rectangle> griezmanDrops;
+	private Array<Rectangle> ronaldoDrops;
+	private Array<Rectangle> viniDrops;
+	
 	//#endregion
 
+	private Texture[] vect = new Texture[26];
+
+	
 	@Override
 	public void create() {
 
@@ -149,7 +180,7 @@ public class Test extends ApplicationAdapter {
 		//#region textures
 
 		titularesImage = new Texture(Gdx.files.internal("titulares.png"));
-		suplentesImage = new Texture(Gdx.files.internal("suplentes.png"));
+		//suplentesImage = new Texture(Gdx.files.internal("suplentes.png"));
 
 		bucketImage = new Texture(Gdx.files.internal("scaloni.png"));
 		messiImage = new Texture(Gdx.files.internal("messi2.png"));
@@ -178,32 +209,42 @@ public class Test extends ApplicationAdapter {
 		rodriguezImage= new Texture(Gdx.files.internal("rodriguez.png"));
 		rulliImage= new Texture(Gdx.files.internal("rulli.png"));
 		tagliaImage= new Texture(Gdx.files.internal("taglia.png"));
+
+		tortugaImage = new Texture(Gdx.files.internal("donatello.png"));
+		lukaImage = new Texture(Gdx.files.internal("luka.png"));
+		neuerImage = new Texture(Gdx.files.internal("neuer.png"));
+		boboImage = new Texture(Gdx.files.internal("bobo.png"));
+		griezmanImage = new Texture(Gdx.files.internal("griezman.png"));
+		kaneImage = new Texture(Gdx.files.internal("kane.png"));
+		ronaldoImage = new Texture(Gdx.files.internal("ronaldo.png"));
+		viniImage = new Texture(Gdx.files.internal("vinidinho.png"));
 		
 //#endregion
 
 		// load the drop sound effect and the rain background "music"
-		dropSound = Gdx.audio.newSound(Gdx.files.internal("drop.wav"));
+		dropSound = Gdx.audio.newMusic(Gdx.files.internal("drop.wav"));
+		dropSound.setVolume(0.0f);
 		rainMusic = Gdx.audio.newMusic(Gdx.files.internal("rain.mp3"));
-
+		
 		// start the playback of the background music immediately
 		rainMusic.setLooping(true);
-		rainMusic.setVolume(0.25f);
+		rainMusic.setVolume(0.0f);
 		rainMusic.play();
 	
 
 		// create the camera and the SpriteBatch
 		camera = new OrthographicCamera();
-		camera.setToOrtho(false, 1200, 800);
+		camera.setToOrtho(false, 1500, 500);
 		batch = new SpriteBatch();
 
 		titulares = new Rectangle();
-		titulares.x = 500;
+		titulares.x = 800;
 		titulares.y = 50; 
 		titulares.width = 64;
 		titulares.height = 64;
 
 		suplentes = new Rectangle();
-		suplentes.x = 800;
+		suplentes.x = 1250;
 		suplentes.y = 0; 
 		suplentes.width = 64;
 		suplentes.height = 64;
@@ -251,7 +292,16 @@ public class Test extends ApplicationAdapter {
 		pezzelaDrops= new Array<Rectangle>();
 		rodriguezDrops= new Array<Rectangle>();
 		rulliDrops= new Array<Rectangle>();
-		tagliaDrops= new Array<Rectangle>();	
+		tagliaDrops= new Array<Rectangle>();
+		
+		tortugaDrops = new Array<Rectangle>();
+		lukaDrops= new Array<Rectangle>();
+		neuerDrops= new Array<Rectangle>();
+		kaneDrops = new Array<Rectangle>();
+		boboDrops= new Array<Rectangle>();
+		griezmanDrops= new Array<Rectangle>();
+		ronaldoDrops= new Array<Rectangle>();
+		viniDrops= new Array<Rectangle>();
 		//#endregion	
 		
 		
@@ -500,6 +550,80 @@ public class Test extends ApplicationAdapter {
 			//lasttagliaDropTime = TimeUtils.nanoTime();
 		}
 	
+		private void spawnTortugaDrop() {
+			Rectangle tortugaDrop = new Rectangle();
+			tortugaDrop.x = MathUtils.random(0, 650-64);
+			tortugaDrop.y = 960;
+			tortugaDrop.width = 64;
+			tortugaDrop.height = 64;
+			tortugaDrops.add(tortugaDrop);		
+			//lastMessiDropTime = TimeUtils.nanoTime();
+		}
+
+		private void spawnLukaDrop() {
+			Rectangle lukaDrop = new Rectangle();
+			lukaDrop.x = MathUtils.random(0, 650-64);
+			lukaDrop.y = 960;
+			lukaDrop.width = 64;
+			lukaDrop.height = 64;
+			lukaDrops.add(lukaDrop);		
+			//lastMessiDropTime = TimeUtils.nanoTime();
+		}
+
+		private void spawnNeuerDrop() {
+			Rectangle neuerDrop = new Rectangle();
+			neuerDrop.x = MathUtils.random(0, 650-64);
+			neuerDrop.y = 960;
+			neuerDrop.width = 64;
+			neuerDrop.height = 64;
+			neuerDrops.add(neuerDrop);		
+			//lastMessiDropTime = TimeUtils.nanoTime();
+		}
+		private void spawnKaneDrop() {
+			Rectangle kaneDrop = new Rectangle();
+			kaneDrop.x = MathUtils.random(0, 650-64);
+			kaneDrop.y = 960;
+			kaneDrop.width = 64;
+			kaneDrop.height = 64;
+			kaneDrops.add(kaneDrop);		
+			//lastMessiDropTime = TimeUtils.nanoTime();
+		}
+		private void spawnBoboDrop() {
+			Rectangle boboDrop = new Rectangle();
+			boboDrop.x = MathUtils.random(0, 650-64);
+			boboDrop.y = 960;
+			boboDrop.width = 64;
+			boboDrop.height = 64;
+			boboDrops.add(boboDrop);						
+			//lastMessiDropTime = TimeUtils.nanoTime();
+		}
+		private void spawnGriezmanDrop() {
+			Rectangle griezmanDrop = new Rectangle();
+			griezmanDrop.x = MathUtils.random(0, 650-64);
+			griezmanDrop.y = 960;
+			griezmanDrop.width = 64;
+			griezmanDrop.height = 64;
+			griezmanDrops.add(griezmanDrop);		
+			//lastMessiDropTime = TimeUtils.nanoTime();
+		}
+		private void spawnRonaldoDrop() {
+			Rectangle ronaldoDrop = new Rectangle();
+			ronaldoDrop.x = MathUtils.random(0, 650-64);
+			ronaldoDrop.y = 960;
+			ronaldoDrop.width = 64;
+			ronaldoDrop.height = 64;
+			ronaldoDrops.add(ronaldoDrop);		
+			//lastMessiDropTime = TimeUtils.nanoTime();
+		}
+		private void spawnViniDrop() {
+			Rectangle viniDrop = new Rectangle();
+			viniDrop.x = MathUtils.random(0, 650-64);
+			viniDrop.y = 960;
+			viniDrop.width = 64;
+			viniDrop.height = 64;
+			viniDrops.add(viniDrop);		
+			//lastMessiDropTime = TimeUtils.nanoTime();
+		}
 	 
 		//#endregion
 	
@@ -509,6 +633,7 @@ public class Test extends ApplicationAdapter {
 	
 		@Override
 	public void render() {
+
 		// clear the screen with a dark blue color. The
 		// arguments to clear are the red, green
 		// blue and alpha component in the range [0,1]
@@ -528,9 +653,93 @@ public class Test extends ApplicationAdapter {
 		batch.draw(bucketImage, bucket.x, bucket.y);
 
 		batch.draw(titularesImage, titulares.x, titulares.y);
-		batch.draw(suplentesImage, suplentes.x, suplentes.y);
+		//batch.draw(suplentesImage, suplentes.x, suplentes.y);
+		
+		//#region jugadoresObtenidos
 
 
+		if(vect[0]!=null){
+			batch.draw(vect[0],1000,120);	//dibu
+		}
+		if(vect[1]!=null){
+			batch.draw(vect[1],1125,210);	//molina
+		}
+		if(vect[2]!=null){
+			batch.draw(vect[2],1050,174);	//cuti
+		}
+		if(vect[3]!=null){
+			batch.draw(vect[3],950,174);	//otamendi
+		}
+		if(vect[4]!=null){
+			batch.draw(vect[4],850,210);	//tagliafico
+		}
+		if(vect[5]!=null){
+			batch.draw(vect[5],1120,278);	//paul
+		}
+		if(vect[6]!=null){
+			batch.draw(vect[6], 995,250);	//enzo
+		}
+		if(vect[7]!=null){
+			batch.draw(vect[7], 875,278);	//mac
+		}
+		if(vect[8]!=null){
+			batch.draw(vect[8], 995,364);	//alvarez
+		}
+		if(vect[9]!=null){
+			batch.draw(vect[9], 890,334);	//fideo
+		}
+		if(vect[10]!=null){
+			batch.draw(vect[10], 1100,334);	//messi
+		}
+		if(vect[11]!=null){
+			batch.draw(vect[11], 1230,430);	//montiel
+		}
+		if(vect[12]!=null){
+			batch.draw(vect[12], 1230,355);	//paredes
+		}
+		if(vect[13]!=null){
+			batch.draw(vect[13], 1230,265);	//pezzella
+		}
+		if(vect[14]!=null){
+			batch.draw(vect[14], 1230,185);	//acuña
+		}
+		if(vect[15]!=null){
+			batch.draw(vect[15], 1230,105);	//dybala
+		}
+		if(vect[16]!=null){
+			batch.draw(vect[16], 1330,430);	//martinez
+		}
+		if(vect[17]!=null){
+			batch.draw(vect[17], 1330,355);	//armani
+		}
+		if(vect[18]!=null){
+			batch.draw(vect[18], 1330,265);	//foyth
+		}
+		if(vect[19]!=null){
+			batch.draw(vect[19], 1330,185);	//rulli
+		}
+		if(vect[20]!=null){
+			batch.draw(vect[20], 1330,105);	//palacios
+		}
+		if(vect[21]!=null){
+			batch.draw(vect[21], 1430,430);	//correa
+		}
+		if(vect[22]!=null){
+			batch.draw(vect[22], 1430,355);	//almada
+		}
+		if(vect[23]!=null){
+			batch.draw(vect[23], 1430,265);	//beckam
+		}
+		if(vect[24]!=null){
+			batch.draw(vect[24], 1430,185);	//rodriguez
+		}
+		if(vect[25]!=null){
+			batch.draw(vect[25], 1430,105);	//licha
+		}
+
+
+
+		//#endregion
 		
 		//#region fors
 
@@ -612,6 +821,33 @@ public class Test extends ApplicationAdapter {
 		for(Rectangle tagliaDrop: tagliaDrops) {
 			batch.draw(tagliaImage, tagliaDrop.x, tagliaDrop.y);
 		}
+
+
+		for(Rectangle tortugaDrop: tortugaDrops) {
+			batch.draw(tortugaImage, tortugaDrop.x, tortugaDrop.y);
+		}
+		for(Rectangle lukaDrop: lukaDrops){
+			batch.draw(lukaImage, lukaDrop.x, lukaDrop.y);
+		}
+		for(Rectangle neuerDrop: neuerDrops) {
+			batch.draw(neuerImage, neuerDrop.x, neuerDrop.y);
+		}		
+		for(Rectangle boboDrop: boboDrops) {
+			batch.draw(boboImage, boboDrop.x, boboDrop.y);
+		}		
+		for(Rectangle griezmanDrop: griezmanDrops) {
+			batch.draw(griezmanImage, griezmanDrop.x, griezmanDrop.y);
+		}
+		for(Rectangle ronaldoDrop: ronaldoDrops) {
+			batch.draw(ronaldoImage, ronaldoDrop.x, ronaldoDrop.y);
+		}
+		for(Rectangle viniDrop: viniDrops) {
+			batch.draw(viniImage, viniDrop.x, viniDrop.y);
+		}
+		for(Rectangle kaneDrop: kaneDrops) {
+			batch.draw(kaneImage, kaneDrop.x, kaneDrop.y);
+		}
+		
 
 		//#endregion
 
@@ -719,6 +955,33 @@ public class Test extends ApplicationAdapter {
 		else if(i == 25){
 			spawndibuDrop();
 		}
+		else if(i == 26){
+			spawnTortugaDrop();
+		}
+		else if(i == 27){
+			spawnBoboDrop();
+		}
+		else if(i == 28){
+			spawnLukaDrop();
+		}
+		else if(i == 29){
+			spawnNeuerDrop();
+		}
+		else if(i == 30){
+			spawnGriezmanDrop();
+		}
+		else if(i == 31){
+			spawnRonaldoDrop();
+		}
+		else if(i == 32){
+			spawnViniDrop();
+		}
+		else if(i == 33){
+			spawnKaneDrop();
+		}
+		
+
+
 
 		//#endregion
 
@@ -753,10 +1016,8 @@ public class Test extends ApplicationAdapter {
 				if(!messiTaken){
 					messiTaken = true;
 					scaloneta++;
-					arr.add(messiDrop);
+					vect[10] = messiImage;
 				}
-				//vect[0]=messiDrop;
-				//score += 1;
 				iter.remove();
 			}
 		}
@@ -770,10 +1031,8 @@ public class Test extends ApplicationAdapter {
 				if(!acuñaTaken){
 					acuñaTaken = true;
 					scaloneta++;
-					arr.add(acuñaDrop);
+					vect[14] = acuñaImage;
 				}
-				//vect[1]=acuñaDrop;
-				//score += 1;
 				iter.remove();
 			}
 		}
@@ -786,10 +1045,8 @@ public class Test extends ApplicationAdapter {
 				if(!almadaTaken){
 					almadaTaken = true;
 					scaloneta++;
-					arr.add(almadaDrop);
+					vect[22] = almadaImage;
 				}
-				//vect[2]=almadaDrop;
-				//score += 1;
 				iter.remove();
 			}
 		}
@@ -804,10 +1061,8 @@ public class Test extends ApplicationAdapter {
 				if(!armaniTaken){
 					armaniTaken = true;
 					scaloneta++;
-					arr.add(armaniDrop);
+					vect[17] = armaniImage;
 				}
-				//vect[3]=armaniDrop;
-				//score += 1;
 				iter.remove();
 			}
 		}
@@ -820,10 +1075,8 @@ public class Test extends ApplicationAdapter {
 				if(!beckamTaken){
 					beckamTaken = true;
 					scaloneta++;
-					arr.add(beckamDrop);
+					vect[23] = beckamImage;
 				}
-				//vect[4]=beckamDrop;
-				//score += 1;
 				iter.remove();
 			}
 		}
@@ -836,10 +1089,8 @@ public class Test extends ApplicationAdapter {
 				if(!coloTaken){
 					coloTaken = true;
 					scaloneta++;
-					arr.add(coloDrop);
+					vect[7] = coloImage;
 				}
-				//vect[5]=coloDrop;
-				//score += 1;
 				iter.remove();
 			}
 		}
@@ -852,10 +1103,8 @@ public class Test extends ApplicationAdapter {
 				if(!correaTaken){
 					correaTaken = true;
 					scaloneta++;
-					arr.add(correaDrop);
+					vect[21] = correaImage;
 				}
-				//vect[6]=correaDrop;
-				//score += 1;
 				iter.remove();
 			}
 		}
@@ -868,10 +1117,8 @@ public class Test extends ApplicationAdapter {
 				if(!cutiTaken){
 					cutiTaken = true;
 					scaloneta++;
-					arr.add(cutiDrop);
+					vect[2]=cutiImage;
 				}
-				//vect[7]=cutiDrop;
-				//score += 1;
 				iter.remove();
 			}
 		}
@@ -884,10 +1131,8 @@ public class Test extends ApplicationAdapter {
 				if(!dibuTaken){
 					dibuTaken = true;
 					scaloneta++;
-					arr.add(dibuDrop);
+					vect[0] = dibuImage;					
 				}
-				//vect[8]=dibuDrop;
-				//score += 1;
 				iter.remove();
 			}
 		}
@@ -900,10 +1145,8 @@ public class Test extends ApplicationAdapter {
 				if(!dybalaTaken){
 					dybalaTaken = true;
 					scaloneta++;
-					arr.add(dybalaDrop);
+					vect[15] = dybalaImage;
 				}
-				//vect[9]=dybalaDrop;
-				//score += 1;
 				iter.remove();
 			}
 		}
@@ -916,10 +1159,9 @@ public class Test extends ApplicationAdapter {
 				if(!enzoTaken){
 					enzoTaken = true;
 					scaloneta++;
-					arr.add(enzoDrop);
+					vect[6] = enzoImage;
+					
 				}
-				//vect[10]= enzoDrop;
-				//score += 1;
 				iter.remove();
 			}
 		}
@@ -932,10 +1174,8 @@ public class Test extends ApplicationAdapter {
 				if(!fideoTaken){
 					fideoTaken = true;
 					scaloneta++;
-					arr.add(fideoDrop);
+					vect[9] = fideoImage;
 				}
-				//vect[11]= fideoDrop;
-				//score += 1;
 				iter.remove();
 			}
 		}
@@ -948,10 +1188,8 @@ public class Test extends ApplicationAdapter {
 				if(!foythTaken){
 					foythTaken = true;
 					scaloneta++;
-					arr.add(foythDrop);
+					vect[18]= foythImage;
 				}
-				//vect[12]=foythDrop;
-				//score += 1;
 				iter.remove();
 			}
 		}
@@ -964,10 +1202,8 @@ public class Test extends ApplicationAdapter {
 				if(!julianTaken){
 					julianTaken = true;
 					scaloneta++;
-					arr.add(julianDrop);
+					vect[8] = julianImage;
 				}
-				//vect[13]=julianDrop;
-				//score += 1;
 				iter.remove();
 			}
 		}
@@ -980,10 +1216,8 @@ public class Test extends ApplicationAdapter {
 				if(!lautaTaken){
 					lautaTaken = true;
 					scaloneta++;
-					arr.add(lautaDrop);
+					vect[16] = lautaImage;
 				}
-				//vect[14]=lautaDrop;
-				//score += 1;
 				iter.remove();
 			}
 		}
@@ -996,10 +1230,8 @@ public class Test extends ApplicationAdapter {
 				if(!lichaTaken){
 					lichaTaken = true;
 					scaloneta++;
-					arr.add(lichaDrop);
+					vect[25] = lichaImage;
 				}
-				//vect[15]=lichaDrop;
-				//score += 1;
 				iter.remove();
 			}
 		}
@@ -1012,10 +1244,8 @@ public class Test extends ApplicationAdapter {
 				if(!molinaTaken){
 					molinaTaken = true;
 					scaloneta++;
-					arr.add(molinaDrop);
+					vect[1]=molinaImage;
 				}
-				//vect[16]=molinaDrop;
-				//score += 1;
 				iter.remove();
 			}
 		}
@@ -1028,10 +1258,8 @@ public class Test extends ApplicationAdapter {
 				if(!montielTaken){
 					montielTaken = true;
 					scaloneta++;
-					arr.add(montielDrop);
+					vect[11] = montielImage;
 				}
-				//vect[17]=montielDrop;
-				//score += 1;
 				iter.remove();
 			}
 		}
@@ -1044,10 +1272,8 @@ public class Test extends ApplicationAdapter {
 				if(!otamendiTaken){
 					otamendiTaken = true;
 					scaloneta++;
-					arr.add(otamendiDrop);
+					vect[3]=otamendiImage;
 				}
-				//vect[18]=otamendiDrop;
-				//score += 1;
 				iter.remove();
 			}
 		}
@@ -1060,10 +1286,8 @@ public class Test extends ApplicationAdapter {
 				if(!paredesTaken){
 					paredesTaken = true;
 					scaloneta++;
-					arr.add(paredesDrop);
+					vect[12] = paredesImage;
 				}
-				//vect[19]=paredesDrop;
-				//score += 1;
 				iter.remove();
 			}
 		}
@@ -1076,10 +1300,8 @@ public class Test extends ApplicationAdapter {
 				if(!paulTaken){
 					paulTaken = true;
 					scaloneta++;
-					arr.add(paulDrop);
+					vect[5] = paulImage;
 				}
-				//score += 1;
-				//vect[20]=paulDrop;
 				iter.remove();
 			}
 		}
@@ -1092,10 +1314,8 @@ public class Test extends ApplicationAdapter {
 				if(!pezzelaTaken){
 					pezzelaTaken = true;
 					scaloneta++;
-					arr.add(pezzelaDrop);
+					vect[13]=pezzelaImage;
 				}
-				//vect[21]=pezzelaDrop;
-				//score += 1;
 				iter.remove();
 			}
 		}
@@ -1108,10 +1328,8 @@ public class Test extends ApplicationAdapter {
 				if(!rodriguezTaken){
 					rodriguezTaken = true;
 					scaloneta++;
-					arr.add(rodriguezDrop);
+					vect[24] = rodriguezImage;
 				}
-				//vect[22]=rodriguezDrop;
-				//score += 1;
 				iter.remove();
 			}
 		}
@@ -1124,10 +1342,8 @@ public class Test extends ApplicationAdapter {
 				if(!rulliTaken){
 					rulliTaken = true;
 					scaloneta++;
-					arr.add(rulliDrop);
+					vect[19] = rulliImage;
 				}
-				//vect[23]=rulliDrop;
-				//score += 1;
 				iter.remove();
 			}
 		}
@@ -1140,10 +1356,8 @@ public class Test extends ApplicationAdapter {
 				if(!tagliaTaken){
 					tagliaTaken = true;
 					scaloneta++;
-					arr.add(tagliaDrop);
+					vect[4]=tagliaImage;
 				}
-				//score += 1;
-				//vect[24]=tagliaDrop;
 				iter.remove();
 			}
 		}		
@@ -1156,21 +1370,109 @@ public class Test extends ApplicationAdapter {
 				if(!palaciosTaken){
 					palaciosTaken = true;
 					scaloneta++;
-					arr.add(palaciosDrop);
+					vect[20] = palaciosImage;
 				}
-				//vect[25]=palaciosDrop;
-				//score += 1;
+				iter.remove();
+			}
+		}
+		for (Iterator<Rectangle> iter = tortugaDrops.iterator(); iter.hasNext(); ) {
+			Rectangle tortugaDrop = iter.next();
+			tortugaDrop.y -= 250 * Gdx.graphics.getDeltaTime();
+			if(tortugaDrop.y + 64 < 0) iter.remove();
+			if(tortugaDrop.overlaps(bucket)) {
+				dropSound.play();
+				vidas = vidas - 1;
+				iter.remove();
+			}
+		}
+		for (Iterator<Rectangle> iter = lukaDrops.iterator(); iter.hasNext(); ) {
+			Rectangle lukaDrop = iter.next();
+			lukaDrop.y -= 250 * Gdx.graphics.getDeltaTime();
+			if(lukaDrop.y + 64 < 0) iter.remove();
+			if(lukaDrop.overlaps(bucket)) {
+				dropSound.play();
+				vidas = vidas - 1;
+				iter.remove();
+			}
+		}
+		for (Iterator<Rectangle> iter = neuerDrops.iterator(); iter.hasNext(); ) {
+			Rectangle neuerDrop = iter.next();
+			neuerDrop.y -= 250 * Gdx.graphics.getDeltaTime();
+			if(neuerDrop.y + 64 < 0) iter.remove();
+			if(neuerDrop.overlaps(bucket)) {
+				dropSound.play();
+				vidas = vidas - 1;
+				iter.remove();
+			}
+		}
+		for (Iterator<Rectangle> iter = boboDrops.iterator(); iter.hasNext(); ) {
+			Rectangle boboDrop = iter.next();
+			boboDrop.y -= 250 * Gdx.graphics.getDeltaTime();
+			if(boboDrop.y + 64 < 0) iter.remove();
+			if(boboDrop.overlaps(bucket)) {
+				dropSound.play();
+				vidas = vidas - 1;
+				iter.remove();
+			}
+		}
+		for (Iterator<Rectangle> iter = kaneDrops.iterator(); iter.hasNext(); ) {
+			Rectangle kaneDrop = iter.next();
+			kaneDrop.y -= 250 * Gdx.graphics.getDeltaTime();
+			if(kaneDrop.y + 64 < 0) iter.remove();
+			if(kaneDrop.overlaps(bucket)) {
+				dropSound.play();
+				vidas = vidas - 1;
+				iter.remove();
+			}
+		}
+		for (Iterator<Rectangle> iter = ronaldoDrops.iterator(); iter.hasNext(); ) {
+			Rectangle ronaldoDrop = iter.next();
+			ronaldoDrop.y -= 250 * Gdx.graphics.getDeltaTime();
+			if(ronaldoDrop.y + 64 < 0) iter.remove();
+			if(ronaldoDrop.overlaps(bucket)) {
+				dropSound.play();
+				vidas = vidas - 1;
+				iter.remove();
+			}
+		}
+		for (Iterator<Rectangle> iter = viniDrops.iterator(); iter.hasNext(); ) {
+			Rectangle viniDrop = iter.next();
+			viniDrop.y -= 250 * Gdx.graphics.getDeltaTime();
+			if(viniDrop.y + 64 < 0) iter.remove();
+			if(viniDrop.overlaps(bucket)) {
+				dropSound.play();
+				vidas = vidas - 1;
+				iter.remove();
+			}
+		}
+		for (Iterator<Rectangle> iter = griezmanDrops.iterator(); iter.hasNext(); ) {
+			Rectangle griezmanDrop = iter.next();
+			griezmanDrop.y -= 250 * Gdx.graphics.getDeltaTime();
+			if(griezmanDrop.y + 64 < 0) iter.remove();
+			if(griezmanDrop.overlaps(bucket)) {
+				dropSound.play();
+				vidas = vidas - 1;
 				iter.remove();
 			}
 		}
 
-//#endregion
+
+		//#endregion
+
+		//#region Final
 
 		if(scaloneta >= 26){
 			JFrame jFrame = new JFrame();
 			JOptionPane.showMessageDialog(jFrame, "Completaste la Scaloneta! ahora a ganar utro mundial pibe");
-
-		}		
+			System.exit(0);
+		}	
+		
+		if (vidas <= 0){
+			JFrame jFrame = new JFrame();
+			JOptionPane.showMessageDialog(jFrame, "Perdiste loco");
+			System.exit(0);
+		}
+		//#endregion
 
 	}
 	@Override
@@ -1179,7 +1481,7 @@ public class Test extends ApplicationAdapter {
 
 		//#region dispose
 		titularesImage.dispose();
-		suplentesImage.dispose();
+		//suplentesImage.dispose();
 
 		bucketImage.dispose();
 		dropSound.dispose();
